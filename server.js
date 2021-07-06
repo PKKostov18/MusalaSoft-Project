@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== 'production') {
   const session = require('express-session')
   const methodOverride = require('method-override')
   
-  const initializePassport = require('./passport-config')
+  const initializePassport = require('./config/passport-config')
   initializePassport(
     passport,
     email => users.find(user => user.email === email),
@@ -18,6 +18,19 @@ if (process.env.NODE_ENV !== 'production') {
   )
   
   const users = []
+
+  const sql = require('mssql')
+
+async () => {
+    try {
+        // make sure that any items are correctly URL encoded in the connection string
+        await sql.connect('Server=localhost,1433;Database=Job Posting;User Id=username;Password=password;Encrypt=true')
+        const result = await sql.query`select * from mytable where id = ${value}`
+        console.dir(result)
+    } catch (err) {
+        // ... error checks
+    }
+}
   
   app.set('view-engine', 'ejs')
   app.use(express.urlencoded({ extended: false }))
