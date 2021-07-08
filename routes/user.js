@@ -1,16 +1,12 @@
 class Users {
-    constructor(Id,username, first_name, last_name, age, city,  phone, email, password)
+    constructor(Id,FirstName, LastName, Email, Password)
     {
         this.Id = Id;
-        this.username = username;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.age = age;
-        this.city = city;
-        this.phone = phone;
-        this.email = email;
-        this.password = password;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Password = Password;
     }
 }
 
-module.exports = Users;
+module.exports.Users = Users;

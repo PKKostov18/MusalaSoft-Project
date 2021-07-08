@@ -1,100 +1,79 @@
 if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
-  }
-  
-  const express = require('express')
-  const app = express()
-  const bcrypt = require('bcrypt')
-  const passport = require('passport')
-  const flash = require('express-flash')
-  const session = require('express-session')
-  const methodOverride = require('method-override')
-  
-  const initializePassport = require('./config/passport-config')
-  initializePassport(
-    passport,
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
-  )
-  
-  const users = []
-
-  const sql = require('mssql')
-
-async () => {
-    try {
-        // make sure that any items are correctly URL encoded in the connection string
-        await sql.connect('Server=localhost,1433;Database=Job Posting;User Id=username;Password=password;Encrypt=true')
-        const result = await sql.query`select * from mytable where id = ${value}`
-        console.dir(result)
-    } catch (err) {
-        // ... error checks
-    }
+  require('dotenv').config()
 }
-  
-  app.set('view-engine', 'ejs')
-  app.use(express.urlencoded({ extended: false }))
-  app.use(flash())
-  app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-  }))
-  app.use(passport.initialize())
-  app.use(passport.session())
-  app.use(methodOverride('_method'))
-  
-  app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.name })
-  })
-  
-  app.get('/login', checkNotAuthenticated, (req, res) => {
-    res.render('login.ejs')
-  })
-  
-  app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-  }))
-  
-  app.get('/register', checkNotAuthenticated, (req, res) => {
-    res.render('register.ejs')
-  })
-  
-  app.post('/register', checkNotAuthenticated, async (req, res) => {
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10)
-      users.push({
-        id: Date.now().toString(),
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword
-      })
-      res.redirect('/login')
-    } catch {
-      res.redirect('/register')
-    }
-  })
-  
-  app.delete('/logout', (req, res) => {
-    req.logOut()
-    res.redirect('/login')
-  })
-  
-  function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next()
-    }
-  
-    res.redirect('/login')
+
+const express = require('express')
+const app = express()
+const bcrypt = require('bcrypt')
+const passport = require('passport')
+const flash = require('express-flash')
+const session = require('express-session')
+const methodOverride = require('method-override')
+let user_registration_router = require('./routes/user-register')
+
+const initializePassport = require('./config/passport-config')
+initializePassport(
+  passport,
+  email => result.find(user => user.email === email),
+  id => result.find(user => user.id === id)
+)
+const {config} = require('./config/database-config')
+
+app.use('/', user_registration_router)
+app.set('view-engine', 'ejs')
+app.use(express.urlencoded({ extended: false }))
+app.use(flash())
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(methodOverride('_method'))
+
+(async () =>{
+  console.log('Trying to connect');
+  let connection = await sql.connect(config);
+  console.log('Connected');
+})()
+
+app.get('/', checkAuthenticated, (req, res) => {
+  res.render('homepage.ejs', { name: req.user.name })
+})
+
+app.get('/login', checkNotAuthenticated, (req, res) => {
+  res.render('login.ejs')
+})
+
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+}))
+
+app.get('/register', checkNotAuthenticated, (req, res) => {
+  res.render('register.ejs')
+})
+
+app.delete('/logout', (req, res) => {
+  req.logOut()
+  res.redirect('/login')
+})
+
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next()
   }
-  
-  function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return res.redirect('/')
-    }
-    next()
+
+  res.redirect('/login')
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/')
   }
-  
-  app.listen(3000)
+  next()
+}
+
+app.listen(3000)
