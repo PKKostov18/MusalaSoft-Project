@@ -2,6 +2,7 @@ const express = require('express');
 const {config} = require('../config/database-config');
 const sql = require('mssql/msnodesqlv8');
 const crypto = require('crypto');
+const bcrypt = require('bcrypt')
 
 let router = express.Router();
 
@@ -19,16 +20,16 @@ const sha256 = crypto.createHash('sha256');
 router.post('/register', async function(req, res, next) {
     try {
         const pool = await sql.connect   (config);
-        const passHash = sha256.update(req.body.password).digest('hex');
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
         
         const result = await pool.request()
-            .input("first_name", sql.NVarChar, req.body.first_name)
-            .input("last_name", sql.NVarChar, req.body.last_name)
-            .input("email", sql.NVarChar, req.body.email)
-            .input("password", sql.NVarChar, passHash)
+            .input("FirstName", sql.NVarChar, req.body.FirstName)
+            .input("LastName", sql.NVarChar, req.body.LastName)
+            .input("Email", sql.NVarChar, req.body.Email)
+            .input("Password", sql.NVarChar, hashedPassword)
             .query(`
-                INSERT INTO Users (first_name, last_name,age, email, password)
-                VALUES (@first_name, @last_name, @age,  @email, @password)
+                INSERT INTO Users (FirstName, LastName, Email, Password)
+                VALUES (@FirstName, @LastName, @Email, @Password)
             `)
         console.log(result)
 

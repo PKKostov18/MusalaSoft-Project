@@ -1,6 +1,6 @@
 const config = {
     database: "MusalaSoft-Internship",
-    server: "localhost",
+    server: "DESKTOP-62QDEH8\\SQLEXPRESS",
     pool: {
         max: 10,
         min: 0,
