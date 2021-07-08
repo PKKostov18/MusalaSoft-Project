@@ -11,7 +11,7 @@ router.use(express.urlencoded({ extended: true }));
 
 router.get('/register', function (req, res)
 {
-    res.render('Register_User');
+    res.render('register.ejs');
 });
 
 const sha256 = crypto.createHash('sha256');
@@ -40,4 +40,3 @@ router.post('/register', async function(req, res, next) {
 });
 
 module.exports = router;
-module.exports = result;

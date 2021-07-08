@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+//const sql = require('mssql/msnodesqlv8');
 const express = require('express')
 const app = express()
 const bcrypt = require('bcrypt')
@@ -9,7 +10,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
-let user_registration_router = require('./routes/user-register')
+//let user_registration_router = require('./routes/user-register')
 
 const initializePassport = require('./config/passport-config')
 initializePassport(
@@ -17,10 +18,13 @@ initializePassport(
   email => result.find(user => user.email === email),
   id => result.find(user => user.id === id)
 )
-const {config} = require('./config/database-config')
+//const {config} = require('./config/database-config')
 
-app.use('/', user_registration_router)
+const users = []
+
+//app.use('/', user_registration_router)
 app.set('view-engine', 'ejs')
+
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session({
@@ -31,15 +35,22 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
+app.use(express.static(__dirname + '/public'));
 
+/*
 (async () =>{
   console.log('Trying to connect');
   let connection = await sql.connect(config);
   console.log('Connected');
 })()
+*/
 
-app.get('/', checkAuthenticated, (req, res) => {
-  res.render('homepage.ejs', { name: req.user.name })
+app.get('/', (req, res) => {
+  res.render('homepageBeforeLogin.ejs')
+})
+
+app.get('/homepageAfterLogin', checkAuthenticated, (req, res) => {
+  res.render('homepageAfterLogin.ejs', {name: req.body.name})
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -54,6 +65,23 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
   res.render('register.ejs')
+})
+
+app.post('/register', async (req, res) => {
+  try{
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    users.push({
+      id: Date.now().toString(),
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword
+    })
+    res.redirect('/login')
+  }catch
+  {
+    res.redirect('/register')
+  }
+  console.log(users)
 })
 
 app.delete('/logout', (req, res) => {
