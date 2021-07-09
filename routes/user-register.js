@@ -23,7 +23,7 @@ router.post('/register', async function(req, res, next) {
         const result = await pool.request()
             .input("Username", sql.NVarChar, req.body.name)
             .input("Email", sql.NVarChar, req.body.email)
-            .input("Password", sql.NVarChar, hashedPassword)
+            .input("Password", sql.VarChar, hashedPassword)
             .query(`
                 INSERT INTO Users (Username, Email, Password)
                 VALUES (@Username, @Email, @Password)

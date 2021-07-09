@@ -1,11 +1,10 @@
 const express = require('express')
 const {config} = require('../config/database-config')
 const sql = require('mssql/msnodesqlv8')
+const initializePassport = require('./config/passport-config')
 
 let router = express.Router()
-
 router.use(express.json())
-
 router.use(express.urlencoded({ extended: true }))
 
 router.get('/login', function (req, res)
@@ -23,7 +22,7 @@ router.post('/login', async function(req, res) {
             SELECT Password FROM Users WHERE Email = @Email
         `)
 
-        const initializePassport = require('./config/passport-config')
+        
         initializePassport(
             passport,
             email => result.find(user => user.email === email),
