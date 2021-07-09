@@ -1,6 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy
 
-var bcrypt = require('bcrypt')
+var bcrypt = require('bcrypt-nodejs')
 var dbconfig = require('../config/database-config')
 
 var sql = require('mssql/msnodesqlv8')
@@ -9,7 +9,8 @@ sql.connect(dbconfig.config, function(err)
     if (err)
     {
         throw err
-    } else
+    } 
+    else
     {
         console.log('connected')
     }
@@ -26,7 +27,7 @@ module.exports = function(passport)
 
     passport.deserializeUser(function(id, done) 
     {
-        request.query("select * from Users where id =" + id, function(err,rows)
+        request.query("select * from Users where Id =" + id, function(err,rows)
         {
             done(err, rows[0]);
         });
@@ -42,7 +43,7 @@ module.exports = function(passport)
         },
         function(req, username, password, done) 
         {
-            request.query("SELECT * FROM Users WHERE username ='" + username + "'", function(err, rows) 
+            request.query("SELECT * FROM Users WHERE Username ='" + username + "'", function(err, rows) 
             {
                 if (err)
                 {
@@ -56,18 +57,20 @@ module.exports = function(passport)
                 {
                     var newUserMysql = 
                     {
-                        username: username,
-                        password: bcrypt.hashSync(username, null, null)  
+                        username: req.body.username,
+                        email: req.body.email,
+                        password: bcrypt.hashSync(req.body.password, null, null)  
                     };
 
                     request
                     .input('Username', sql.NVarChar(50), newUserMysql.username)
-                    .input('Password', sql.VarChar(100), newUserMysql.password)
-                    .query('INSERT INTO Users (username, password) values (@username, @password); SELECT SCOPE_IDENTITY() AS id;', function(err, rows) 
+                    .input('Email', sql.NVarChar(50), newUserMysql.email)
+                    .input('Password', sql.VarChar(80), newUserMysql.password)
+                    .query('INSERT INTO Users (Username, Email, Password) values (@Username, @Email, @Password); SELECT SCOPE_IDENTITY() AS Id;', function(err, rows) 
                     {
-                        newUserMysql.id = rows[0].id;
-                        return done(null, newUserMysql);
-                    });
+                      newUserMysql.id = rows[0].id
+                      return done(null, newUserMysql)
+                  });
                 }
             });
         })
@@ -77,13 +80,13 @@ module.exports = function(passport)
         'local-login',
         new LocalStrategy(
         {
-            usernameField : 'username',
-            passwordField : 'password',
+            usernameField : 'Username',
+            passwordField : 'Password',
             passReqToCallback : true
         },
         function(req, username, password, done) 
         { 
-            request.query("SELECT * FROM Users WHERE username ='"+username+"'", function(err, rows)
+            request.query("SELECT * FROM Users WHERE Username ='" + username + "'", function(err, rows)
             {
                 if (err)
                 {
@@ -94,7 +97,7 @@ module.exports = function(passport)
                     return done(null, false, req.flash('loginMessage', 'No user found.'))
                 }
 
-                bcrypt.compare('password', rows[0].password, function(err, res) 
+                bcrypt.compare('Password', rows[0].password, function(err, res) 
                 {
                     console.log( res )
                     if( res == null )

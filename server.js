@@ -21,15 +21,18 @@ require('./config/passport-config')(passport)
 app.use(morgan('dev'))
 app.use(cookieParser())
 
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+
 //app.use('/', user_registration_router)
 app.set('view engine', 'ejs') 
-
-app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session(
 {
   secret: process.env.SESSION_SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: true
 }))
 
