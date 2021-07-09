@@ -1,7 +1,6 @@
 const express = require('express');
 const {config} = require('../config/database-config');
 const sql = require('mssql/msnodesqlv8');
-const crypto = require('crypto');
 const bcrypt = require('bcrypt')
 
 let router = express.Router();
