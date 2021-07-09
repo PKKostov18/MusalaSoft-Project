@@ -1,6 +1,9 @@
 const config = {
-    database: "MusalaSoft-Internship",
-    server: "(localdb)\\MSSQLLocalDB",
+
+    connection: {
+        database: "MusalaSoft-Internship",
+        server: "DESKTOP-62QDEH8\\SQLEXPRESS", /*(localdb)\\MSSQLLocalDB*/ 
+    },
     pool: {
         max: 10,
         min: 0,
@@ -10,7 +13,10 @@ const config = {
         trustedConnection: true,
         encrypt: false,
         trustServerCertificate: false
-    }
+    },
+    users_table: 'Users',
+    database: "MusalaSoft-Internship",
+    server: ".\\SQLExpress", /*(localdb)\\MSSQLLocalDB*/ 
 };
 
 module.exports.config = config;
