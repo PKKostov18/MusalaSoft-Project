@@ -1,9 +1,8 @@
 class Users {
-    constructor(Id,FirstName, LastName, Email, Password)
+    constructor(Id, Username, Email, Password)
     {
         this.Id = Id;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
+        this.Username = Username;
         this.Email = Email;
         this.Password = Password;
     }

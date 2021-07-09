@@ -13,7 +13,7 @@ router.get('/login', function (req, res)
     res.render('login')
 });
 
-router.post('/login', async function(req, res, next) {
+router.post('/login', async function(req, res) {
     try {
         const pool = await sql.connect   (config)
         
@@ -22,16 +22,13 @@ router.post('/login', async function(req, res, next) {
         .query(`
             SELECT Password FROM Users WHERE Email = @Email
         `)
-        
-        //Checks if the admin password matches the admin password in the database
 
-        if(result.recordset[0].password == req.body.password)
-        {
-            req.session.isAdmin = true
-        } else {
-
-            req.session.isAdmin = false
-        }  
+        const initializePassport = require('./config/passport-config')
+        initializePassport(
+            passport,
+            email => result.find(user => user.email === email),
+            id => result.find(user => user.id === id)
+        ) 
         
     } catch (err) {
         console.log(err)

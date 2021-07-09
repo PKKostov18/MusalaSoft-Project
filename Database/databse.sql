@@ -1,14 +1,13 @@
 USE [master]
 GO
 
-/****** Object:  Database [MusalaSoft-Internship]    Script Date: 7.7.2021 г. 21:40:11 ******/
+/****** Object:  Database [MusalaSoft-Internship]    Script Date: 7/9/2021 9:42:18 AM ******/
 CREATE DATABASE [MusalaSoft-Internship]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'MusalaSoft-Internship', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\MusalaSoft-Internship.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'MusalaSoft-Internship', FILENAME = N'C:\Users\PKKostov18\MusalaSoft-Internship.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'MusalaSoft-Internship_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\MusalaSoft-Internship_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
+( NAME = N'MusalaSoft-Internship_log', FILENAME = N'C:\Users\PKKostov18\MusalaSoft-Internship_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
 GO
 
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
@@ -104,10 +103,22 @@ GO
 ALTER DATABASE [MusalaSoft-Internship] SET DELAYED_DURABILITY = DISABLED 
 GO
 
-ALTER DATABASE [MusalaSoft-Internship] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+ALTER DATABASE [MusalaSoft-Internship] SET QUERY_STORE = OFF
 GO
 
-ALTER DATABASE [MusalaSoft-Internship] SET QUERY_STORE = OFF
+USE [MusalaSoft-Internship]
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION SET LEGACY_CARDINALITY_ESTIMATION = OFF;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 0;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION SET PARAMETER_SNIFFING = ON;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION SET QUERY_OPTIMIZER_HOTFIXES = OFF;
 GO
 
 ALTER DATABASE [MusalaSoft-Internship] SET  READ_WRITE 

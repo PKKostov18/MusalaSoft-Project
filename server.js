@@ -18,6 +18,7 @@ initializePassport(
   email => result.find(user => user.email === email),
   id => result.find(user => user.id === id)
 )
+
 const {config} = require('./config/database-config')
 
 app.use('/', user_registration_router)
@@ -35,19 +36,17 @@ app.use(passport.session())
 app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'));
 
-
 (async () =>{
   console.log('Trying to connect');
   let connection = await sql.connect(config);
   console.log('Connected');
 })()
 
-
 app.get('/', (req, res) => {
   res.render('homepageBeforeLogin.ejs')
 })
 
-app.get('/homepageAfterLogin', checkAuthenticated, (req, res) => {
+app.get('/', checkAuthenticated, (req, res) => {
   res.render('homepageAfterLogin.ejs', {name: req.body.name})
 })
 
