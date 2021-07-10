@@ -40,7 +40,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'))
-
+    
 /*(async () =>{
   console.log('Trying to connect');
   let connection = await sql.connect(config);

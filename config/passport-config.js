@@ -27,8 +27,10 @@ module.exports = function(passport)
 
     passport.deserializeUser(function(id, done) 
     {
-        request.query("select * from Users where Id =" + id, function(err,rows)
+        console.log('USER ID : ' + id);
+        request.query("select * from Users where Id =" + id, function(err, rows)
         {
+            console.log('RESULT : ' + rows);
             done(err, rows[0]);
         });
     });
@@ -68,7 +70,8 @@ module.exports = function(passport)
                     .input('Password', sql.VarChar(80), newUserMysql.password)
                     .query('INSERT INTO Users (Username, Email, Password) values (@Username, @Email, @Password); SELECT SCOPE_IDENTITY() AS Id;', function(err, rows) 
                     {
-                      newUserMysql.id = rows[0].id
+                      console.log(rows)
+                      newUserMysql.id = rows.recordset[0].Id
                       return done(null, newUserMysql)
                   });
                 }

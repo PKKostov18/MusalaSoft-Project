@@ -1,3 +1,5 @@
+const { session } = require("passport");
+
 module.exports = function(app, passport) {
 
 	app.get('/', function(req, res) {
@@ -32,7 +34,7 @@ module.exports = function(app, passport) {
 	app.post('/register', passport.authenticate('local-signup', {
 		successRedirect : '/homepageAfterLogin', 
 		failureRedirect : '/register', 
-		failureFlash : true 
+		failureFlash : true
 	}));
 
     
