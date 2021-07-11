@@ -44,6 +44,10 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('/contact', isLoggedIn, function(req, res) {
+		res.render('contact.ejs')
+	});
+
 
     app.get('/logout', function(req, res) {
 		req.logout();
@@ -56,5 +60,6 @@ function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated())
 		return next();
 
-	res.redirect('/');
+	
+	res.redirect('/login');
 }

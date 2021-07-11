@@ -71,7 +71,7 @@ module.exports = function(passport)
                     .query('INSERT INTO Users (Username, Email, Password) values (@Username, @Email, @Password); SELECT SCOPE_IDENTITY() AS Id;', function(err, rows) 
                     {
                       console.log(rows)
-                      newUserMysql.id = rows.recordset[0].Id
+                      newUserMysql.id = rows.recordset[0].id
                       return done(null, newUserMysql)
                   });
                 }
@@ -100,7 +100,14 @@ module.exports = function(passport)
                     return done(null, false, req.flash('loginMessage', 'No user found.'))
                 }
 
-                bcrypt.compare('Password', rows[0].password, function(err, res) 
+                var newUserMysql = 
+                {
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: bcrypt.hashSync(req.body.password, null, null)  
+                };
+
+                bcrypt.compare(newUserMysql.password ,rows.recordset[0].password, function(err, res) 
                 {
                     console.log( res )
                     if( res == null )
@@ -109,11 +116,11 @@ module.exports = function(passport)
                     }
                     else
                     {
-                      return done(null, rows[0])
+                      return done(null, rows.recordset[0])
                     }
                 })
 
-                if (!bcrypt.compareSync(password, rows[0].password))
+                if (!bcrypt.compareSync(newUserMysql.password, rows.recordset[0].password))
                 {
                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'))
                 }
