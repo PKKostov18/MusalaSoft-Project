@@ -2,9 +2,11 @@ const { session } = require("passport");
 
 module.exports = function(app, passport) {
 
+
 	app.get('/', function(req, res) {
 		res.render('homepageBeforeLogin.ejs'); 
 	});
+
 
 	app.get('/login', function(req, res) {
 		res.render('login.ejs', { message: req.flash('loginMessage') });
@@ -13,7 +15,7 @@ module.exports = function(app, passport) {
 
 	app.post('/login', passport.authenticate('local-login', {
           successRedirect : '/homepageAfterLogin', 
-          failureRedirect : '/login', 
+          failureRedirect : '/homepageBeforeLogin', 
           failureFlash : true 
 	}),
       function(req, res) {
@@ -25,7 +27,11 @@ module.exports = function(app, passport) {
             req.session.cookie.expires = false;
           }
       res.redirect('/');
-  });
+    });
+
+    app.get('/homepageBeforeLogin', function(req, res) {
+		res.render('homepageBeforeLogin.ejs'); 
+	});
 
 	app.get('/register', function(req, res) {
 		res.render('register.ejs', { message: req.flash('signupMessage') });
@@ -36,7 +42,6 @@ module.exports = function(app, passport) {
 		failureRedirect : '/register', 
 		failureFlash : true
 	}));
-
     
 	app.get('/homepageAfterLogin', isLoggedIn, function(req, res) {
 		res.render('homepageAfterLogin.ejs', {
@@ -55,6 +60,16 @@ module.exports = function(app, passport) {
 	app.get('/profile', function(req, res) {
 		res.render('profile.ejs')
 	});
+
+	app.get('/postJob', function(req, res) {
+		res.render('postJob.ejs');
+	});
+
+	app.post('/postJob', passport.authenticate('insert-jobs', {
+		successRedirect : '/homepageBeforeLogin', 
+		failureRedirect : '/postJob', 
+		failureFlash : true
+	}));
 
     app.get('/logout', function(req, res) {
 		req.logout();

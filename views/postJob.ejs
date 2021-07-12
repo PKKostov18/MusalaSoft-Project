@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Job Posting</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles/postJob.css">
+
+       
+    </head>
+<body>
+
+<form action="/postJob" method="POST">
+    <div class="container">
+      <h1>Post a job</h1>
+      <p>Please fill in this form to post a job.</p>
+      <hr>
+
+      <div> 
+        <b><label for="title">Job Title</label></b>   
+        <input type="text" placeholder="Enter Job Title" id="name" name="jobTitle" required> 
+      </div>
+  
+      <div>
+        <label for="company"><b>Company</b></label>
+        <input type="text" placeholder="Enter Company" name="companyName" id="email" required>
+      </div>
+
+      <div>
+        <label for="password psw"><b>City</b></label>
+        <input type="text" placeholder="Enter City" name="city" id="psw" required>
+      </div>
+
+      <div>
+        <label for="password psw"><b>WorkTime</b></label>
+        <input type="text" placeholder="Enter Work Time" name="workTime" id="psw" required>
+      </div>
+
+      <div>
+        <label for="password psw"><b>Description</b></label>
+        <input type="text" placeholder="Enter Description" name="description" id="psw" required>
+      </div>
+
+      <div>
+        <label for="password psw"><b>Salary</b></label>
+        <input type="text" placeholder="Enter Salary" name="salary" id="psw" required>
+      </div>
+      
+      <hr>
+  
+      <button type="submit" class="registerbtn">Post a job</button>
+    </div>
+  </form>
+
+</body>
+</html>

@@ -80,11 +80,63 @@ module.exports = function(passport)
     );
 
     passport.use(
+        'insert-jobs',
+        new LocalStrategy(
+        {
+            jobTitleField : 'jobTitle',
+            companyNameField : 'companyName',
+            cityField : 'city',
+            workTimeField : 'workTime',
+            descriptionField : 'description',
+            salaryField : 'salary',
+            passReqToCallback : true 
+        },
+        function(req, jobTitle, password, done) 
+        {
+            request.query("SELECT * FROM JobApplication WHERE JobTitle ='" + jobTitle + "'", function(err, rows) 
+            {
+                if (err)
+                {
+                    return done(err);
+                }
+
+                console.log(jobTitle)
+
+                var newJobMysql = 
+                {
+                    jobTitle: req.body.jobTitle,
+                    companyName: req.body.companyName,
+                    city: req.body.city,
+                    workTime: req.body.workTime,
+                    description: req.body.description,
+                    salary: req.body.salary
+                };
+
+                console.log(newJobMysql)
+
+                request
+                .input('JopTitle', sql.NVarChar(50), newJobMysql.jobTitle)
+                .input('CompanyName', sql.NVarChar(50), newJobMysql.companyName)
+                .input('City', sql.NVarChar(50), newJobMysql.city)
+                .input('WorkTime', sql.NVarChar(50), newJobMysql.workTime)
+                .input('Description', sql.NVarChar(100), newJobMysql.description)
+                .input('Salary', sql.Decimal(18, 0), newJobMysql.salary)
+                .query('INSERT INTO JobApplication (JopTitle, CompanyName, City, WorkTime, Description, Salary) VALUES (@JopTitle, @CompanyName, @City, @WorkTime, @Description, @Salary); SELECT SCOPE_IDENTITY() AS Id;', function(err, rows) 
+                {
+                    console.log(rows)
+                    newJobMysql.id = rows.recordset[0].id
+                    return done(null, newJobMysql)
+                });
+            });
+        })
+    );
+
+    passport.use(
         'local-login',
         new LocalStrategy(
         {
-            usernameField : 'Username',
-            passwordField : 'Password',
+            usernameField : 'username',
+            passwordField : 'password',
             passReqToCallback : true
         },
         function(req, username, password, done) 

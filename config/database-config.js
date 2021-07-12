@@ -2,7 +2,7 @@ const config = {
 
     connection: {
         database: "MusalaSoft-Internship",
-        server: "(localdb)\\MSSQLLocalDB", /*DESKTOP-62QDEH8\\SQLEXPRESS*/
+        server: "(DESKTOP-62QDEH8\\SQLEXPRESS", /*DESKTOP-62QDEH8\\SQLEXPRESS*/
     },
     pool: {
         max: 10,
@@ -16,7 +16,7 @@ const config = {
     },
     users_table: 'Users',
     database: "MusalaSoft-Internship",
-    server: "(localdb)\\MSSQLLocalDB", /*(localdb)\\MSSQLLocalDB*/ 
+    server: "DESKTOP-62QDEH8\\SQLEXPRESS", /*(localdb)\\MSSQLLocalDB*/ 
 };
 
 module.exports.config = config;
