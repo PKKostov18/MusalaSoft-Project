@@ -1,0 +1,1 @@
+ne trii taq papka tq e samo vremenna nakraq she q razkarame tuka she praq nqkvi raboti prosto
