@@ -1,24 +1,136 @@
-  
 <!DOCTYPE html>
 <html>
 
 <head>
-<title>Job Posting</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/public/styles/index.css">
-    
+<title>Easy Job</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="stylesheet" type="text/css" href="styles/homepageAfterLogin.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 
 <body>
 
-    <h1>Hi <%= user %></h1>
-<form action="/logout?_method=DELETE" method="POST">
-  <button type="submit">Log Out</button>
-</form>
+  <div id="navbar">
+    <img src="img/logo.png" style="float: left; display: block; width: 200px;"> 
+    <a href="/homepageBeforeLogin" style="padding-top: 51px;">Home</a>
+    <a href="/jobs" style="padding-top: 51px;">Jobs</a>
+    <a href="/contact" style="padding-top: 51px;">Contact</a>
+    <a href="/profile" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >My Profile</a>
+  </div>
+
+  <div class="header">
+    <h1 class="title">Easy Job</h1>
+    <div class="wrapper">
+        <input type="text" class="input" placeholder="Search Jobs..">
+        <div class="searchbtn"><i class="fas fa-search" style="z-index: 1;"></i></div>
+    </div>
+  </div>
+  
+  <br>
+  <br>
+
+
+  <div id="content" style="padding-bottom: 0;">
+    <h3>POPULAR JOB CATEGORIES</h3>
+  </div>
+    
+  <p style="text-align: center; font-size: 20px; color: #b4b2b2;">A better career is out there. We'll help you find it. We're your first step to becoming everything you want to be.</p>
+  
+  <br>
+  <br>
+  <br>  
+
+<center>
+    <div class="row" style="display: flex; justify-content: center; width: auto;">
+        <div class="column" style="padding: 50px;" data-aos="fade-up" data-aos-duration="2000">
+          <div class="content">
+            <i class='fas fa-poll' style='font-size:50px; color: #30abd4;'></i>  
+            <h5 style="font-size: 20px;">SALES & MARKETING</h5>
+          </div>
+        </div>
+        <div class="column" style="padding: 50px;" data-aos="fade-up" data-aos-duration="2000">
+            <div class="content">
+              <i class='far fa-building' style='font-size:50px; color: #30abd4;'></i>
+              <h5 style="font-size: 20px;">CONSTRUCTION / FACILITIES</h5>
+            </div>
+        </div>
+        <div class="column" style="padding: 50px;" data-aos="fade-up" data-aos-duration="2000">
+            <div class="content">
+              <i class='fas fa-car' style='font-size:50px; color: #30abd4;'></i>  
+              <h5 style="font-size: 20px;">АUTOMOTIVE JOBS</h5>
+            </div>
+        </div>
+        <div class="column" style="padding: 50px;" data-aos="fade-up" data-aos-duration="2000">
+            <div class="content">
+              <i class='fas fa-donate' style='font-size:50px; color: #30abd4;'></i>  
+              <h5 style="font-size: 20px;">ACCOUNTING / FINANCE</h5>
+            </div>
+        </div>
+    </div>
+</center>
+
+<center>
+    <div class="row" style="display: flex; justify-content: center; padding: 20x">
+        <div class="column" style="padding: 50px;" data-aos="fade-up" data-aos-duration="2000">
+            <div class="content">
+              <i class='fas fa-satellite-dish' style='font-size:50px; color: #30abd4;'></i>  
+              <h5 style="font-size: 20px;">TELECOMMUNICATIONS</h5>
+            </div>
+        </div>
+        <div class="column" style="padding: 50px;" data-aos="fade-up" data-aos-duration="2000">
+            <div class="content">
+              <i class='fas fa-graduation-cap' style='font-size:50px; color: #30abd4;'></i>  
+              <h5 style="font-size: 20px;">EDUCATION TRAINING</h5>
+            </div>
+        </div>
+        <div class="column" style="padding: 50px;" data-aos="fade-up" data-aos-duration="2000">
+            <div class="content">
+              <i class='fas fa-hamburger' style='font-size:50px; color: #30abd4;'></i>  
+              <h5 style="font-size: 20px;">RESTAURANT / FOOD SERVICIES</h5>
+            </div>  
+        </div>
+        <div class="column" style="padding: 50px;"data-aos="fade-up" data-aos-duration="2000"> 
+            <div class="content">
+              <i class='fas fa-ambulance' style='font-size:50px; color: #30abd4;'></i>  
+              <h5 style="font-size: 20px;">HEALTH CARE</h5>
+            </div>
+        </div>  
+    </div>
+</center>
+
+<br>
+
+
+  <div class="container">
+
+    <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/Using_Social_Media_For_Job_Searching.jpg">
+   
+    <div class="text">
+      <h3>MILLIONS OF JOBS. <br> FIND THE ONE THAT'S RIGHT FOR YOU.</h3>
+      <p> Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over 600,000 companies worldwide. The right job is out there.</p>
+    </div> 
+  </div>
+
+
+  <button id="btnToScrollTop" onclick="topFunction()">
+      <i class="fas fa-arrow-up"></i>
+  </button>
+  
+<footer id="footer">
+    <div>
+      <center>
+        <p id="copyright">Copyrights © Easy Job 2021</p>
+      </center>
+    </div>
+</footer>
+
+<script src="js/homepageBeforeLogin.js"></script>
+<script>
+  AOS.init();
+</script>
 
 </body>
 
-<footer>
-    
-</footer>
 </html>

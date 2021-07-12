@@ -48,6 +48,13 @@ module.exports = function(app, passport) {
 		res.render('contact.ejs')
 	});
 
+	app.get('/jobs', isLoggedIn, function(req, res) {
+		res.render('jobs.ejs')
+	});
+
+	app.get('/profile', function(req, res) {
+		res.render('profile.ejs')
+	});
 
     app.get('/logout', function(req, res) {
 		req.logout();

@@ -8,7 +8,7 @@ const express = require('express')
 const app = express()
 var morgan = require('morgan')
 const passport = require('passport')
-const flash = require('express-flash')
+const flash = require('connect-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 var cookieParser  = require('cookie-parser')
@@ -21,14 +21,15 @@ require('./config/passport-config')(passport)
 app.use(morgan('dev'))
 app.use(cookieParser())
 
-app.use(express.json());
+
 app.use(express.urlencoded({
   extended: true
 }));
+app.use(express.json());
 
 //app.use('/', user_registration_router)
 app.set('view engine', 'ejs') 
-app.use(flash())
+
 app.use(session(
 {
   secret: process.env.SESSION_SECRET,
@@ -38,6 +39,7 @@ app.use(session(
 
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(flash())
 app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'))
     
@@ -48,6 +50,6 @@ app.use(express.static(__dirname + '/public'))
 })()
 */
 
-require('./routes/routes')(app, passport);
+require('./routes/routes.js')(app, passport);
 
 app.listen(3000)
