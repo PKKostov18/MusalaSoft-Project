@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Job Posting</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="styles/login.css">
-    </head>
+<head>
+  <link rel="stylesheet" type="text/css" href="styles/login.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
 <body>
 
-<h2>Modal Login Form</h2>
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
 
@@ -15,37 +14,31 @@
   
   <form class="modal-content animate" action="/login" method="POST">
     <div class="imgcontainer">
-      <span class="close" title="Close Modal">&times;</span>
-      <h1 style="text-align: center;">Login</h1>
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="img/transparentLogo.png" width="500px" height="300px">
     </div>
 
     <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="name" required>
 
-      <div style="color: red;">
-          <%= message %>
-      </div>
-
-      <br>
-
-      <label for="username uname"><b>Username</b></label>
-      <input type="username" placeholder="Enter Username" name="username" required>
-
-      <label for="password psw"><b>Password</b></label>
+      <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="password" required>
+        <br>
+      <button type="submit" class="login">Login</button>
         
-      <button type="submit">Login</button>
+        <br>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
     </div>
 
-    <div class="container" style="background-color:#f1f1f1">
+      <br>
       <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="psw">Don't have an account: <a href="/register">Register</a></span>
-    </div>
+      <span class="psw">Create your account <a href="/register">now</a></span>
+    
   </form>
 </div>
-
 
 <script src="js/login.js"></script>
 

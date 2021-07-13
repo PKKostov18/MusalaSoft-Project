@@ -1,17 +1,31 @@
 const { session } = require("passport");
+var dbconfig = require('../config/database-config')
+var sql = require('mssql/msnodesqlv8')
+var bcrypt = require('bcrypt-nodejs')
+
+sql.connect(dbconfig.config, function(err) 
+{
+    if (err)
+    {
+        throw err
+    } 
+    else
+    {
+        console.log('connected')
+    }
+})
+
+var request = new sql.Request(dbconfig.connection)
 
 module.exports = function(app, passport) {
-
 
 	app.get('/', function(req, res) {
 		res.render('homepageBeforeLogin.ejs'); 
 	});
 
-
 	app.get('/login', function(req, res) {
 		res.render('login.ejs', { message: req.flash('loginMessage') });
 	});
-
 
 	app.post('/login', passport.authenticate('local-login', {
           successRedirect : '/homepageAfterLogin', 
@@ -37,20 +51,39 @@ module.exports = function(app, passport) {
 		res.render('register.ejs', { message: req.flash('signupMessage') });
 	});
 
-	app.post('/register', passport.authenticate('local-signup', {
-		successRedirect : '/homepageAfterLogin', 
-		failureRedirect : '/register', 
-		failureFlash : true
-	}));
+	app.post('/register', function(req, res, done){
+		// register user (insert into db)
+		/*
+		let username = req.body.username;
+		let email = req.body.email;
+		let password = req.body.password;
+		*/
+		var newUserMysql = 
+        {
+            username: req.body.username,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, null, null)  
+        };
+
+	 	request
+	 	.input('Username', sql.NVarChar(50), newUserMysql.username)
+	 	.input('Email', sql.NVarChar(50), newUserMysql.email)
+	 	.input('Password', sql.VarChar(80), newUserMysql.password)
+	 	.query('INSERT INTO Users (Username, Email, Password) values (@Username, @Email, @Password); SELECT SCOPE_IDENTITY() AS Id;', function(err, rows) 
+	 	{
+	 	  console.log(rows)
+	 	  newUserMysql.id = rows.recordset[0].id
+	 	  return done(null, newUserMysql)
+
+	   });
+	   res.redirect('/register')
+	   alert("Successfully create an account!");
+	});
     
 	app.get('/homepageAfterLogin', isLoggedIn, function(req, res) {
 		res.render('homepageAfterLogin.ejs', {
 			user : req.user 
 		});
-	});
-
-	app.get('/contact', isLoggedIn, function(req, res) {
-		res.render('contact.ejs')
 	});
 
 	app.get('/jobs', isLoggedIn, function(req, res) {
@@ -71,10 +104,14 @@ module.exports = function(app, passport) {
 		failureFlash : true
 	}));
 
-    app.get('/logout', function(req, res) {
+	app.get('/contact', function(req, res) {
+		res.render('contact.ejs')
+	});
+
+	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
-	});	
+	});
 };
 
 function isLoggedIn(req, res, next) {
