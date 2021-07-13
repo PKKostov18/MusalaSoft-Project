@@ -72,7 +72,7 @@ module.exports = function(app, passport) {
 
 	   });
 	   res.redirect('/register')
-	   alert("Successfully create an account!");
+
 	});
     
 	app.get('/homepageAfterLogin', isLoggedIn, function(req, res) {
@@ -93,35 +93,27 @@ module.exports = function(app, passport) {
 		res.render('postJob.ejs');
 	});
 
-	app.post('/postJob', function(req, res, done){
-
-		var newJobMysql = 
-		{
-			jobTitle: req.body.jobTitle,
-			companyName: req.body.companyName,
-			city: req.body.city,
-			workTime: req.body.workTime,
-			description: req.body.description,
-			salary: req.body.salary
-		};
-
-		console.log(newJobMysql)
-
-		request
-		.input('JopTitle', sql.NVarChar(50), newJobMysql.jobTitle)
-		.input('CompanyName', sql.NVarChar(50), newJobMysql.companyName)
-		.input('City', sql.NVarChar(50), newJobMysql.city)
-		.input('WorkTime', sql.NVarChar(50), newJobMysql.workTime)
-		.input('Description', sql.NVarChar(100), newJobMysql.description)
-		.input('Salary', sql.Decimal(18, 0), newJobMysql.salary)
-		.query('INSERT INTO JobApplication (JopTitle, CompanyName, City, WorkTime, Description, Salary) VALUES (@JopTitle, @CompanyName, @City, @WorkTime, @Description, @Salary); SELECT SCOPE_IDENTITY() AS Id;', function(err, rows) 
-		{
-			console.log(rows)
-			newJobMysql.id = rows.recordset[0].id
-			return done(null, newJobMysql)
-		});
-	   res.redirect('/postJob')
-	   alert("Successfully add a job!");
+	app.post('/postJob', async function(req, res, next) {
+		try {
+			const pool = await sql.connect(request);
+	
+			const result = await pool.request()
+			.input('JobTitle', sql.NVarChar(50), req.body.jobTitle)
+			.input('CompanyName', sql.NVarChar(50), req.body.companyName)
+			.input('City', sql.NVarChar(50), req.body.city)
+			.input('WorkTime', sql.NVarChar(50), req.body.workTime)
+			.input('Description', sql.NVarChar(100), req.body.description)
+			.input('Salary', sql.Decimal(18, 0), req.body.salary)
+			.query(`
+				INSERT INTO JobApplication (JobTitle, CompanyName, City, WorkTime, Description, Salary) 
+				VALUES (@JobTitle, @CompanyName, @City, @WorkTime, @Description, @Salary)
+			`)
+			console.log(result)
+	
+		} catch (err) {
+			console.log(err);
+		}
+		res.redirect("/postJob");
 	});
 
 	app.get('/contact', function(req, res) {

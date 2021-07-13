@@ -35,6 +35,7 @@ module.exports = function(passport)
         });
     });
 
+    /*
     passport.use(
         'insert-jobs',
         new LocalStrategy(
@@ -85,7 +86,7 @@ module.exports = function(passport)
                 });
             });
         })
-    );
+    );*/
 
     passport.use(
         'local-login',
