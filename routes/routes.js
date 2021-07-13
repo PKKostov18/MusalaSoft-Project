@@ -52,12 +52,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.post('/register', function(req, res, done){
-		// register user (insert into db)
-		/*
-		let username = req.body.username;
-		let email = req.body.email;
-		let password = req.body.password;
-		*/
+
 		var newUserMysql = 
         {
             username: req.body.username,
@@ -98,11 +93,36 @@ module.exports = function(app, passport) {
 		res.render('postJob.ejs');
 	});
 
-	app.post('/postJob', passport.authenticate('insert-jobs', {
-		successRedirect : '/homepageBeforeLogin', 
-		failureRedirect : '/postJob', 
-		failureFlash : true
-	}));
+	app.post('/postJob', function(req, res, done){
+
+		var newJobMysql = 
+		{
+			jobTitle: req.body.jobTitle,
+			companyName: req.body.companyName,
+			city: req.body.city,
+			workTime: req.body.workTime,
+			description: req.body.description,
+			salary: req.body.salary
+		};
+
+		console.log(newJobMysql)
+
+		request
+		.input('JopTitle', sql.NVarChar(50), newJobMysql.jobTitle)
+		.input('CompanyName', sql.NVarChar(50), newJobMysql.companyName)
+		.input('City', sql.NVarChar(50), newJobMysql.city)
+		.input('WorkTime', sql.NVarChar(50), newJobMysql.workTime)
+		.input('Description', sql.NVarChar(100), newJobMysql.description)
+		.input('Salary', sql.Decimal(18, 0), newJobMysql.salary)
+		.query('INSERT INTO JobApplication (JopTitle, CompanyName, City, WorkTime, Description, Salary) VALUES (@JopTitle, @CompanyName, @City, @WorkTime, @Description, @Salary); SELECT SCOPE_IDENTITY() AS Id;', function(err, rows) 
+		{
+			console.log(rows)
+			newJobMysql.id = rows.recordset[0].id
+			return done(null, newJobMysql)
+		});
+	   res.redirect('/postJob')
+	   alert("Successfully add a job!");
+	});
 
 	app.get('/contact', function(req, res) {
 		res.render('contact.ejs')
