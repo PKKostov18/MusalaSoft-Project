@@ -13,7 +13,14 @@
     <div class="imgcontainer">
       <img src="img/transparentLogo.png" width="500px" height="300px">
     </div>
+    <br>
 
+    <% if(message.length > 0) {%>
+        <div style="color: red">
+          <%= message%>
+        </div>
+    <% }%>
+    <br>
     <div class="container">
       <label for="uname"><b>Username</b></label>
       <input type="text" placeholder="Enter Username" name="username" required>

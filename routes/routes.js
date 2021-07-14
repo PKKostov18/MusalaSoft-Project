@@ -82,7 +82,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/jobs', isLoggedIn, function(req, res) {
+	app.get('/jobs', function(req, res) {
 		res.render('jobs.ejs')
 	});
 
@@ -101,13 +101,14 @@ module.exports = function(app, passport) {
 			const result = await pool.request()
 			.input('JobTitle', sql.NVarChar(50), req.body.jobTitle)
 			.input('CompanyName', sql.NVarChar(50), req.body.companyName)
+			.input('Category', sql.NVarChar(50), req.body.category)
 			.input('City', sql.NVarChar(50), req.body.city)
 			.input('WorkTime', sql.NVarChar(50), req.body.workTime)
 			.input('Description', sql.NVarChar(100), req.body.description)
 			.input('Salary', sql.Decimal(18, 0), req.body.salary)
 			.query(`
-				INSERT INTO JobApplication (JobTitle, CompanyName, City, WorkTime, Description, Salary) 
-				VALUES (@JobTitle, @CompanyName, @City, @WorkTime, @Description, @Salary)
+				INSERT INTO JobApplication (JobTitle, CompanyName, Category, City, WorkTime, Description, Salary) 
+				VALUES (@JobTitle, @CompanyName, @Category, @City, @WorkTime, @Description, @Salary)
 			`)
 			console.log(result)
 	

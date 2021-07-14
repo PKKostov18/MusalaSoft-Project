@@ -110,9 +110,6 @@ iframe {
     max-width: 1200px;
 }
 
-
-
-
 /*[ Contact ]*/
 
 .container-contact100 {
@@ -368,4 +365,24 @@ textarea.input100 {
     visibility: visible;
     opacity: 1;
   }
+}
+
+#navbar {
+  overflow: hidden;
+  background-color: white;
+  z-index: 2;
+}
+
+#navbar a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+#navbar a:hover {
+  color: #4495f1;
 }

@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== 'production')
   require('dotenv').config()
 }
 
-//const sql = require('mssql/msnodesqlv8');
 const express = require('express')
 const app = express()
 var morgan = require('morgan')
@@ -14,11 +13,9 @@ const methodOverride = require('method-override')
 var cookieParser  = require('cookie-parser')
 const nodemailer = require('nodemailer')
 let mailer = require('./utils/mailer');
-//let jobPost = require('./routes/jobPost')
+let job_list_router = require('./utils/job-list');
+
 require('dotenv').config()
-
-//const {config} = require('./config/database-config')
-
 require('./config/passport-config')(passport)
 
 app.use(morgan('dev'))
@@ -30,7 +27,6 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 
-//app.use('/', jobPost)
 app.set('view engine', 'ejs') 
 
 app.use(session(
@@ -46,15 +42,7 @@ app.use(flash())
 app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'))
 app.use('/', mailer);
-
-/*
-(async () =>{
-  console.log('Trying to connect');
-  let connection = await sql.connect(config);
-  console.log('Connected');
-})()
-*/
-
+app.use('/', job_list_router);
 
 require('./routes/routes.js')(app, passport, nodemailer);
 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="styles/jobs.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+    
+  <div id="navbar">
+    <img src="img/logo.png" style="float: left; display: block; width: 200px;"> 
+    <a href="/homepageBeforeLogin" style="padding-top: 51px;">Home</a>
+    <a href="/jobs" style="padding-top: 51px;">Jobs</a>
+    <a href="/contact" style="padding-top: 51px;">Contact</a>
+    <a href="/profile" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >My Profile</a>
+    <a href="/postJob" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >Post a job</a>
+  </div>
+
+    <!--
+    <h1 class = "UserListLable">Job List</h1>
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <tbody>
+                <%for(let i = 0; i < userList.length; i++) { %> 
+                    <tr>
+                        <td><%=userList[i].JobTitle%></td>
+                        <td><%=userList[i].CompanyName%></td>
+                        <td><%=userList[i].Category%></td>
+                        <td><%=userList[i].City%></td>
+                        <td><%=userList[i].WorkTime%></td>
+                        <td><%=userList[i].Description%></td>
+                        <td><%=userList[i].Salary%></td>
+                        <td><%=userList[i].PublishedOn%></td>
+                    </tr>
+                <%}%>
+            </tbody>
+
+        <table>
+    </div>
+-->
+<section id="gigs" class="container">
+    <h1>All Jobs</h1>
+  <%for(let i = 0; i < userList.length; i++) { %> 
+    <div class="gig">
+        <h3><%=userList[i].JobTitle%></h3>
+        <p><%=userList[i].Description%></p>
+        <ul>
+          <li>Salary: <%=userList[i].Salary%></li>
+          <li><a href="/" class="btn btn-reverse">Apply Now</a></li>
+        </ul>
+        <div class="tech">
+          <small>Technologies Needed: <span>{{technologies}}</span></small>
+        </div>
+      </div>
+    <%}%>
+</section>
+
+</body>
+</html>
