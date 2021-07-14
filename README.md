@@ -40,8 +40,11 @@ By viewing the all the jobs you can filter them by city and category. On our hom
 
 ## Our Team
 
-- Plamen Kostov (Scrum Master, Back-end)
-- Valentin Petrov (Front-end, Documentary)
+Plamen Kostov  | Valentin Petrov
+------------- | -------------
+Scrum Master  | Front-end
+Back-end  | Documentary
+
 
 ## Documentation and Presentation
 
