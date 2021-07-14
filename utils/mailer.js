@@ -7,8 +7,7 @@ let router = express.Router();
 router.use(express.json());
 
 router.get('/contact', function (req, res) {
-    res.render('contact');
-    
+    res.render('contact.ejs', { message: req.flash('contactMessage')});
 });
 
 router.post('/contact', function (req, res){
@@ -45,6 +44,7 @@ router.post('/contact', function (req, res){
         }
         else {
             console.log('Email sent');
+            req.flash('contactMessage', 'Successfully send!')
             res.redirect('/contact')
         }
     })

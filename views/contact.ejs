@@ -1,39 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles/contact.css">
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles/contact.css">
+    <title>Contact</title>
 </head>
 <body>
+    <div class="container-contact100">
 
-<h2>Responsive Contact Section</h2>
-<p>Resize the browser window to see the effect.</p>
+		<div class="wrap-contact100">
+			<form class="contact100-form validate-form" action="/contact" method="POST">
+				<span class="contact100-form-title">
+					Send Us A Message
+				</span>
+        <img src="img/transparentLogo.png" height="300px" width="490px" alt="logo">
+      <form class="marginForm" action="/contact" method="POST">
 
-<div class="container">
-  <div style="text-align: center">
-    <h2>Contact Us</h2>
-    <p>Swing by for a cup of coffee, or leave us a message:</p>
-  </div>
-  <div class="row">
-    <div class="column">
-      <img src="img/transparentLogo.png" style="width:100%">
-    </div>
-    <div class="column">
-      <form action="/contact" method="POST">
-        <label for="name">Name</label>
-        <input type="text" id="fname" name="name" placeholder="Your name..">
-        <label for="email">Email</label>
-        <input type="text" id="fname" name="email" placeholder="Your email..">
-        <label for="subject" name="subject">Subject</label>
-        <input type="text" id="fname" name="subject" placeholder="Subject..">
-        <label for="subject" name="subject">Description</label>
-        <textarea id="subject" name="message" placeholder="Write something.." style="height:170px"></textarea>
-        <input type="submit" value="Submit">
-      </form>
-    </div>
-  </div>
-</div>
+        <br>
+        <% if(message.length > 0) {%>
+            <div style="color: green">
+              <%= message%>
+            </div>
+        <% }%>
+        <br>
+
+				<div class="wrap-input100 ">
+					<input class="input100" type="text" name="name" placeholder="Full Name" required>
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 ">
+					<input class="input100" type="text" name="email" placeholder="E-mail" required>
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 ">
+					<input class="input100" type="text" name="subject" placeholder="Subject" required>
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 ">
+					<textarea class="input100" name="message" placeholder="Your Message" required></textarea>
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn">
+						<span>
+							
+							Send
+						</span>
+					</button>
+				</div>
+        </form>
+			</form>
+		</div>
+	</div>
+
+
+
+
+
 
 </body>
 </html>

@@ -1,44 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Job Posting</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="styles/register.css">
+<head>
+  <link rel="stylesheet" type="text/css" href="styles/register.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Job Posing</title>
 
-       
-    </head>
+</head>
 <body>
 
-<form action="/register" method="POST">
+  <form class="modal-content animate" action="/register" method="POST">
+
+    <h1 id="register">Register</h1>
+
+    <div class="imgcontainer">
+      <img src="img/transparentLogo.png" width="500px" height="300px">
+    </div>
+
+    <br>
+
+    <% if(message.length > 0) {%>
+      <% if(message == "Successfully create an account!") {%>
+        <div style="color: green">
+          <%= message%>
+        </div>
+      <% }%>
+      <% if(message == "The username already exist!") {%>
+        <div style="color: red">
+          <%= message%>
+        </div>
+      <% }%>
+    <% }%>
+
+    <br>
+
     <div class="container">
-      <h1>Register</h1>
-      <p>Please fill in this form to create an account.</p>
-      <hr>
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="username" required>
 
-      <div> 
-        <b><label for="name">Username</label></b>   
-        <input type="text" placeholder="Enter Username" id="name" name="username" required> 
-      </div>
-  
-      <div>
-        <label for="email"><b>Email</b></label>
-        <input type="email" placeholder="Enter Email" name="email" id="email" required>
-      </div>
+      <label for="eml"><b>Email</b></label>
+      <input type="email" placeholder="Enter Email" name="email" required>
 
-      <div>
-      <label for="password psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" id="psw" required>
-      </div>
-      
-      <hr>
-  
-      <button type="submit" class="registerbtn">Register</button>
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required>
+        <br>
+
+      <button type="submit" class="login">Login</button>
+        
+        <br>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
     </div>
+
+    <br>
+    <button type="button" class="cancelbtn"><a href="/homepageBeforeLogin" id="cencel">Cencel</a></button>
+    <span class="psw">You alredy have an account? Log in <a href="/login">now</a></span>
     
-    <div class="container signin">
-        <p>Already have an account? <a href="/login">Login</a></p>
-    </div>
   </form>
+
+
+<script src="js/register.js"></script>
 
 </body>
 </html>

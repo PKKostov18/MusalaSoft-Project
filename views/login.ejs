@@ -7,20 +7,16 @@
 </head>
 <body>
 
-
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
-
-<div id="id01" class="modal">
-  
   <form class="modal-content animate" action="/login" method="POST">
+    <h1 id="login">Login</h1>
+
     <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="img/transparentLogo.png" width="500px" height="300px">
     </div>
 
     <div class="container">
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="name" required>
+      <input type="text" placeholder="Enter Username" name="username" required>
 
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="password" required>
@@ -34,11 +30,11 @@
     </div>
 
       <br>
-      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <button type="button" class="cancelbtn"><a href="/homepageBeforeLogin" id="cencel">Cencel</a></button>
       <span class="psw">Create your account <a href="/register">now</a></span>
     
   </form>
-</div>
+
 
 <script src="js/login.js"></script>
 

@@ -29,7 +29,7 @@ module.exports = function(app, passport) {
 
 	app.post('/login', passport.authenticate('local-login', {
           successRedirect : '/homepageAfterLogin', 
-          failureRedirect : '/homepageBeforeLogin', 
+          failureRedirect : '/login', 
           failureFlash : true 
 	}),
       function(req, res) {
@@ -48,31 +48,32 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/register', function(req, res) {
-		res.render('register.ejs', { message: req.flash('signupMessage') });
+		res.render('register.ejs', { message: req.flash('registerMessage') });
 	});
 
-	app.post('/register', function(req, res, done){
+	app.post('/register', async function(req, res, next) {
+		try {
+			const pool = await sql.connect(request);
+			const hashedPassword = bcrypt.hashSync(req.body.password, null, null)
+	
+			const result = await pool.request()
+			.input('Username', sql.NVarChar(50), req.body.username)
+			.input('Email', sql.NVarChar(50), req.body.email)
+			.input('Password', sql.VarChar(80), hashedPassword)
+			.query(`
+				INSERT INTO Users (Username, Email, Password) 
+				VALUES (@Username, @Email, @Password)
+			`)
+			console.log(result)
+	
+		} catch (err) {
+			console.log(err);
+			req.flash('registerMessage', 'The username already exist!')
+			res.redirect("/register");
+		}	
 
-		var newUserMysql = 
-        {
-            username: req.body.username,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, null, null)  
-        };
-
-	 	request
-	 	.input('Username', sql.NVarChar(50), newUserMysql.username)
-	 	.input('Email', sql.NVarChar(50), newUserMysql.email)
-	 	.input('Password', sql.VarChar(80), newUserMysql.password)
-	 	.query('INSERT INTO Users (Username, Email, Password) values (@Username, @Email, @Password); SELECT SCOPE_IDENTITY() AS Id;', function(err, rows) 
-	 	{
-	 	  console.log(rows)
-	 	  newUserMysql.id = rows.recordset[0].id
-	 	  return done(null, newUserMysql)
-
-	   });
-	   res.redirect('/register')
-
+		req.flash('registerMessage', 'Successfully create an account!')
+		res.redirect("/register");
 	});
     
 	app.get('/homepageAfterLogin', isLoggedIn, function(req, res) {
@@ -117,7 +118,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/contact', function(req, res) {
-		res.render('contact.ejs')
+		res.render('contact.ejs', { message: req.flash('contactMessage')})
 	});
 
 	app.get('/logout', function(req, res) {
@@ -131,6 +132,5 @@ function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated())
 		return next();
 
-	
 	res.redirect('/login');
 }
