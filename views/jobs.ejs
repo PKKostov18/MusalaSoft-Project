@@ -3,58 +3,68 @@
 <head>
   <link rel="stylesheet" type="text/css" href="styles/jobs.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="icon" href="img/tabIcon.png">
+  <title>Jobs</title>
 
 </head>
-<body>
+<body style="background-color: rgb(209, 209, 209);">
 
-    
-  <div id="navbar">
-    <img src="img/logo.png" style="float: left; display: block; width: 200px;"> 
-    <a href="/homepageBeforeLogin" style="padding-top: 51px;">Home</a>
-    <a href="/jobs" style="padding-top: 51px;">Jobs</a>
-    <a href="/contact" style="padding-top: 51px;">Contact</a>
-    <a href="/profile" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >My Profile</a>
-    <a href="/postJob" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >Post a job</a>
-  </div>
-
-    <!--
-    <h1 class = "UserListLable">Job List</h1>
-    <div class="table-wrapper">
-        <table class="fl-table">
-            <tbody>
-                <%for(let i = 0; i < userList.length; i++) { %> 
-                    <tr>
-                        <td><%=userList[i].JobTitle%></td>
-                        <td><%=userList[i].CompanyName%></td>
-                        <td><%=userList[i].Category%></td>
-                        <td><%=userList[i].City%></td>
-                        <td><%=userList[i].WorkTime%></td>
-                        <td><%=userList[i].Description%></td>
-                        <td><%=userList[i].Salary%></td>
-                        <td><%=userList[i].PublishedOn%></td>
-                    </tr>
-                <%}%>
-            </tbody>
-
-        <table>
-    </div>
--->
-<section id="gigs" class="container">
-    <h1>All Jobs</h1>
-  <%for(let i = 0; i < userList.length; i++) { %> 
-    <div class="gig">
-        <h3><%=userList[i].JobTitle%></h3>
-        <p><%=userList[i].Description%></p>
-        <ul>
-          <li>Salary: <%=userList[i].Salary%></li>
-          <li><a href="/" class="btn btn-reverse">Apply Now</a></li>
-        </ul>
-        <div class="tech">
-          <small>Technologies Needed: <span>{{technologies}}</span></small>
-        </div>
+    <div id="navbar">
+        <img src="img/logo.png" style="float: left; display: block; width: 200px;"> 
+        <a href="/homepageBeforeLogin" style="padding-top: 51px;">Home</a>
+        <a href="/jobs" style="padding-top: 51px;">Jobs</a>
+        <a href="/contact" style="padding-top: 51px;">Contact</a>
+        <a href="/postJob" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >Post a job</a>
+        <a href="/profile" style="float: right; padding-top: 51px; color: #4495f1;" >My Profile</a>
       </div>
-    <%}%>
-</section>
+
+    <section id="gigs" class="container">
+        <center><h1 style="font-size:40px">Jobs</h1></center>
+        <%for(let i = 0; i < userList.length; i++) { %> 
+            <div class="gig">
+                <h3><%=userList[i].JobTitle%></h3>
+                <p><%=userList[i].Description%></p>
+                <ul>
+                    <li>Salary: <%=userList[i].Salary%></li>
+                    <li><a href="/" class="btn btn-reverse">Apply Now</a></li>
+                </ul>
+                <div class="tech">
+                    <small>More information: </small>
+                    <button type="button" class="collapsible">HERE</button>
+                    <div class="content"> 
+                        <center><h3 style="font-size:30px">Job: <%=userList[i].JobTitle%></h3></center>
+                        <div style="font-size: 20px">
+                            <p><b>Company:</b> <%=userList[i].CompanyName%></p>
+                            <P><b>Category:</b> <%=userList[i].Category%></P>
+                            <p><b>City:</b> <%=userList[i].City%></p>
+                            <p><b>Work Time:</b> <%=userList[i].WorkTime%></p>
+                            <p><b>Description:</b> <%=userList[i].Description%></p>
+                            <p><b>Salary:</b> <%=userList[i].Salary%></p>
+                            <p><b>Published on:</b> <%=userList[i].PublishedOn%></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <%}%>
+    </section>
+
+    <button id="btnToScrollTop" onclick="topFunction()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <footer id="footer">
+        <div>
+            <center>
+                <p id="copyright">© 2021 Copyright: Easy Job</p>
+            </center>
+        </div>
+    </footer>
+
+<script src="js/jobs.js"></script>
 
 </body>
 </html>
