@@ -50,7 +50,7 @@ By viewing the all the jobs you can filter them by city and category. On our hom
 
 ***
 
-## How to run the project to your machine
+## How to run the project on your machine
 
 ### Step 1: Clone the repository
 
@@ -62,9 +62,17 @@ Open the command prompt and paste this:
 
 `cd MusalaSoft-Project`
 
-### Step 3: Install node modules
+### Step 3: Create `.env` file:
+
+<pre>
+SESSION_SECRET = secret
+PASSWORD = 'your_gmail_password'
+EMAIL = 'your_gmail_email'
+</pre>
+
+### Step 4: Install node modules
 
 `npm install`
 
-### Step 4: Type `npm run devStart` and go to `localhost:3000` in your browser
+### Step 5: Type `npm run devStart` and go to `localhost:3000` in your browser
 
