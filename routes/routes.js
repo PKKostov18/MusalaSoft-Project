@@ -23,7 +23,7 @@ module.exports = function(app, passport) {
 		res.render('homepageBeforeLogin.ejs'); 
 	});
 
-	app.get('/login', checkNotAuthenticated, function(req, res) {
+	app.get('/login', function(req, res) {
 		res.render('login.ejs', { message: req.flash('loginMessage') });
 	});
 
@@ -52,11 +52,11 @@ module.exports = function(app, passport) {
 		}
 		res.redirect("/homepageAfterLogin");
 	});
-    app.get('/homepageBeforeLogin', checkNotAuthenticated, function(req, res) {
+    app.get('/homepageBeforeLogin', function(req, res) {
 		res.render('homepageBeforeLogin.ejs'); 
 	});
 
-	app.get('/register', checkNotAuthenticated, function(req, res) {
+	app.get('/register', function(req, res) {
 		res.render('register.ejs', { message: req.flash('registerMessage') });
 	});
 
@@ -91,17 +91,17 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/jobs', checkAuthenticated, function(req, res) {
+	app.get('/jobs', function(req, res) {
 		res.render('jobs.ejs')
 	});
 
 	
-	app.get('/profile', checkAuthenticated, function(req, res) {
+	app.get('/profile', function(req, res) {
 		res.render('profile.ejs')
 	});
 
-	app.get('/postJob', checkAuthenticated, function(req, res) {
-		res.render('postJob.ejs');
+	app.get('/postJob', function(req, res) {
+		res.render('postJob.ejs', { message: req.flash('jobMessage')});
 	});
 
 	app.post('/postJob', async function(req, res, next) {
@@ -125,10 +125,11 @@ module.exports = function(app, passport) {
 		} catch (err) {
 			console.log(err);
 		}
+		req.flash('jobMessage', 'Successfully post a job!')
 		res.redirect("/postJob");
 	});
 
-	app.get('/contact', checkNotAuthenticated, function(req, res) {
+	app.get('/contact', function(req, res) {
 		res.render('contact.ejs', { message: req.flash('contactMessage')})
 	});
 

@@ -1,72 +1,74 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Job Posting</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="styles/postJob.css">
-
-       
-    </head>
+  <link rel="stylesheet" href="styles/postJob.css">
+  <title>Post a job</title>
 <body>
 
-<form action="/postJob" method="POST">
-    <div class="container">
-      <h1>Post a job</h1>
-      <p>Please fill in this form to post a job.</p>
-      <hr>
+  <div id="navbar">
+    <img src="img/logo.png" style="float: left; display: block; width: 200px;"> 
+    <a href="/homepageAfterLogin" style="padding-top: 51px;">Home</a>
+    <a href="/jobs" style="padding-top: 51px;">Jobs</a>
+    <a href="/contact" style="padding-top: 51px;">Contact</a>
+    <a href="/postJob" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >Post a job</a>
+    <a href="/profile" style="float: right; padding-top: 51px; color: #4495f1;" >My Profile</a>
+  </div>
 
-      <div> 
-        <b><label for="jobTitle">Job Title</label></b>   
-        <input type="text" placeholder="Enter Job Title" id="name" name="jobTitle" required> 
-      </div>
-  
-      <div>
-        <label for="company"><b>Company</b></label>
-        <input type="text" placeholder="Enter Company" name="companyName" id="email" required>
-      </div>
+<div class="DIV">
+  <form action="/postJob" method="POST">
+    <hr>
+    <h1>Post a job</h1> 
+    <img src="img/transparentLogo.png" alt="logo" height="350px">
 
-      <div>
-        <label for="company"><b>Category</b></label>
-        <select style="width: 400px;" name="category">
-          <option value="SALES & MARKETING">SALES & MARKETING</option>
-          <option value="CONSTRUCTION / FACILITIES">CONSTRUCTION / FACILITIES</option>
-          <option value="АUTOMOTIVE JOBS">АUTOMOTIVE JOBS</option>
-          <option value="ACCOUNTING / FINANCE">ACCOUNTING / FINANCE</option>
-          <option value="TELECOMMUNICATIONS">TELECOMMUNICATIONS</option>
-          <option value="EDUCATION TRAINING">EDUCATION TRAINING</option>
-          <option value="RESTAURANT / FOOD SERVICIES">RESTAURANT / FOOD SERVICIES</option>
-          <option value="HEALTH CARE">HEALTH CARE</option>
-        </select>
-      </div>
+    <br>
+    <br>
+    
+    <% if(message.length > 0) {%>
+        <div style="color: green">
+          <%= message%>
+        </div>
+    <% }%>
 
-      <div>
-        <label for="password psw"><b>City</b></label>
-        <input type="text" placeholder="Enter City" name="city" id="psw" required>
-      </div>
+    <br>
+    <br>
 
-      <div>
-        <label for="company"><b>Work Time</b></label>
-        <select style="width: 400px;" name="workTime">
-          <option value="Full Time">Full Time</option>
-          <option value="Part Time">Part Time</option>
-        </select>
-      </div>
+    <div class="form1">
+    <label for="fname">Job Title</label>
+    <input type="text" id="fname" name="jobTitle" placeholder="Enter Job Title" required>
 
-      <div>
-        <label for="password psw"><b>Description</b></label>
-        <input type="text" placeholder="Enter Description" name="description" id="psw" required>
-      </div>
+    <label for="lname">Company</label>
+    <input type="text" id="lname" name="companyName" placeholder="Enter Company" required>
 
-      <div>
-        <label for="password psw"><b>Salary</b></label>
-        <input type="text" placeholder="Enter Salary" name="salary" id="psw" required>
-      </div>
-      
-      <hr>
-  
-      <button type="submit" class="registerbtn">Post a job</button>
+    <label for="country">Category</label>
+    <select id="country" name="category" required>
+      <option value="SALES & MARKETING">SALES & MARKETING</option>
+      <option value="CONSTRUCTION / FACILITIES">CONSTRUCTION / FACILITIES</option>
+      <option value="AUTOMOTIVE JOBS">AUTOMOTIVE JOBS</option>
+      <option value="ACCOUNTING / FINANCE">ACCOUNTING / FINANCE</option>
+      <option value="TELECOMMUNICATIONS">TELECOMMUNICATIONS</option>
+      <option value="EDUCATION TRAINING">EDUCATION TRAINING</option>
+      <option value="RESTAURANT / FOOD SERVICIES">RESTAURANT / FOOD SERVICIES</option>
+      <option value="HEALTH CARE">HEALTH CARE</option>
+    </select>
+
+    <label for="country">City</label>
+    <input type="text" id="lname" name="city" placeholder="Enter City" required>
+
+    <label for="country">Work Time</label>
+    <select id="country" name="workTime" required>
+      <option value="Full Time">Full Time</option>
+      <option value="Part Time">Part Time</option>
+    </select>
+    
+    <label for="country">Description</label>
+    <input type="text" id="lname" name="description" placeholder="Enter Description" required>
+
+    <label for="country">Salary</label>
+    <input type="text" id="lname" name="salary" placeholder="Enter Salary" required>
     </div>
+    
+    <center><button name="name" type="submit">Post a Job</button></center>
   </form>
+</div>
 
 </body>
 </html>
