@@ -73,9 +73,39 @@ PASSWORD = 'your_gmail_password'
 EMAIL = 'your_gmail_email'
 </pre>
 
-### Step 4: Install node modules
+### Step 4: Create database `MusalaSoft-Internship` and execute the two database scripts which are in the repo: 
+`database.sql` file and `login_stored_procedure.sql` file in your Management studio
+
+Configure the `database-config` file:
+
+<pre>
+const config = {
+
+    connection: {
+        database: "MusalaSoft-Internship",
+        server: "your_server_name",
+    },
+    pool: {
+        max: 10,
+        min: 0,
+        idleTimeoutMillis: 30000
+    },
+    options: {
+        trustedConnection: true,
+        encrypt: false,
+        trustServerCertificate: false
+    },
+    users_table: 'Users',
+    database: "MusalaSoft-Internship",
+    server: "your_server_name", 
+};
+
+module.exports.config = config;
+</pre>
+
+### Step 5: Install node modules
 
 `npm install`
 
-### Step 5: Type `npm run devStart` and go to `localhost:3000` in your browser
+### Step 6: Type `npm run devStart` and go to `localhost:3000` in your browser
 
