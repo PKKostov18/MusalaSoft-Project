@@ -23,31 +23,40 @@ module.exports = function(app, passport) {
 		res.render('homepageBeforeLogin.ejs'); 
 	});
 
-	app.get('/login', function(req, res) {
+	app.get('/login', checkNotAuthenticated, function(req, res) {
 		res.render('login.ejs', { message: req.flash('loginMessage') });
 	});
 
-	app.post('/login', passport.authenticate('local-login', {
-          successRedirect : '/homepageAfterLogin', 
-          failureRedirect : '/login', 
-          failureFlash : true 
-	}),
-      function(req, res) {
-          console.log("hello");
-
-          if (req.body.remember) {
-            req.session.cookie.maxAge = 1000 * 60 * 3;
-          } else {
-            req.session.cookie.expires = false;
-          }
-      res.redirect('/');
-    });
-
-    app.get('/homepageBeforeLogin', function(req, res) {
+	app.post("/login", async function(req, res) {
+		try {
+			let loggedUserInfo = {};
+			console.log(req.body);
+			const pool = await sql.connect(dbconfig);
+			const result = await pool
+				.request()
+				.input("Username", sql.NVarChar, req.body.username)
+				.input("IncommingPassword", sql.NVarChar, req.body.password)
+				.output("VerifiedId", sql.Int)
+				.output("UsernameOut", sql.VarChar)
+				.execute("LoginUser");
+			loggedUserInfo.id = result.output.VerifiedId;
+			loggedUserInfo.username = result.output.UsernameOut;
+			console.log(loggedUserInfo);
+		} catch (e) {
+			console.log(e);
+			if (e instanceof sql.RequestError) {
+				return displayError(
+					res, "A database error has occured! Please try again later."
+				);
+			} 
+		}
+		res.redirect("/homepageAfterLogin");
+	});
+    app.get('/homepageBeforeLogin', checkNotAuthenticated, function(req, res) {
 		res.render('homepageBeforeLogin.ejs'); 
 	});
 
-	app.get('/register', function(req, res) {
+	app.get('/register', checkNotAuthenticated, function(req, res) {
 		res.render('register.ejs', { message: req.flash('registerMessage') });
 	});
 
@@ -76,21 +85,22 @@ module.exports = function(app, passport) {
 		res.redirect("/register");
 	});
     
-	app.get('/homepageAfterLogin', isLoggedIn, function(req, res) {
+	app.get('/homepageAfterLogin', function(req, res) {
 		res.render('homepageAfterLogin.ejs', {
 			user : req.user 
 		});
 	});
 
-	app.get('/jobs', function(req, res) {
+	app.get('/jobs', checkAuthenticated, function(req, res) {
 		res.render('jobs.ejs')
 	});
 
-	app.get('/profile', function(req, res) {
+	
+	app.get('/profile', checkAuthenticated, function(req, res) {
 		res.render('profile.ejs')
 	});
 
-	app.get('/postJob', function(req, res) {
+	app.get('/postJob', checkAuthenticated, function(req, res) {
 		res.render('postJob.ejs');
 	});
 
@@ -118,7 +128,7 @@ module.exports = function(app, passport) {
 		res.redirect("/postJob");
 	});
 
-	app.get('/contact', function(req, res) {
+	app.get('/contact', checkNotAuthenticated, function(req, res) {
 		res.render('contact.ejs', { message: req.flash('contactMessage')})
 	});
 
@@ -128,10 +138,17 @@ module.exports = function(app, passport) {
 	});
 };
 
-function isLoggedIn(req, res, next) {
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next()
+    }
 
-	if (req.isAuthenticated())
-		return next();
+    res.redirect('/login')
+  }
 
-	res.redirect('/login');
-}
+  function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect('/')
+    }
+    next()
+  }
