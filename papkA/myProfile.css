@@ -8,24 +8,56 @@ img{
 {
     height: 320px;
     position: relative;
-    border: 5px solid rgb(199, 199, 199); 
+    border: 3px solid rgb(199, 199, 199); 
     width: 300px;
     border-style: inset;
+    margin-top:280px;
+    margin-left:460px;
 }
-h3,h4{
+h2,h5{
     text-align: center;
     
 }
-h3{
+h2{
     color:rgb(70, 70, 70);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
 }
-h4{
+h5{
     color:rgb(168, 168, 168);
 }
 
-
-
-
-  
+.profileInfo
+{
+    height: 320px;
+    position: relative;
+    border: 3px solid rgb(199, 199, 199); 
+    width: 600px;
+    border-style: inset;
+    margin-left:780px;
+    margin-top:-325px;
+}
+h4
+{
+    margin-left:10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.profileInfo button{
+background-color: #ffffff; 
+border: none;
+color: rgb(3, 3, 3);
+padding: 16px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 12px;
+margin: 4px 2px;
+transition-duration: 0.4s;
+cursor: pointer;
+border-radius: 25px;
+border: 2px solid #1aadf1;
+}
+button:hover{
+    background-color: #227dd1;
+    color: rgb(231, 231, 231);
+}
