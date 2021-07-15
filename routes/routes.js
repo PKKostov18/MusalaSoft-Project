@@ -2,6 +2,7 @@ const { session } = require("passport");
 var dbconfig = require('../config/database-config')
 var sql = require('mssql/msnodesqlv8')
 var bcrypt = require('bcrypt-nodejs')
+var express = require('express');
 
 sql.connect(dbconfig.config, function(err) 
 {
@@ -30,6 +31,7 @@ module.exports = function(app, passport) {
 	app.post("/login", async function(req, res) {
 		try 
 		{
+			
 			let loggedUserInfo = {};
 			console.log(req.body);
 			const pool = await sql.connect(dbconfig);
@@ -39,10 +41,27 @@ module.exports = function(app, passport) {
 				.input("IncommingPassword", sql.NVarChar, req.body.password)
 				.output("VerifiedId", sql.Int)
 				.output("UsernameOut", sql.VarChar)
+				.output("PasswordOut", sql.VarChar)
 				.execute("LoginUser");
 			loggedUserInfo.id = result.output.VerifiedId;
 			loggedUserInfo.username = result.output.UsernameOut;
-			console.log(loggedUserInfo);
+			loggedUserInfo.password = result.output.PasswordOut;
+
+			console.log(loggedUserInfo.password);
+			console.log(req.body.password);
+
+			if(loggedUserInfo.username == null || !bcrypt.compareSync(req.body.password, loggedUserInfo.password))
+			{
+				req.flash('loginMessage', 'Invalid username!')
+				console.log(loggedUserInfo);
+				res.redirect("/login")
+			}
+			else
+			{
+				console.log(loggedUserInfo);
+				res.redirect("/homepageAfterLogin");
+			}
+		
 		} 
 		catch(e) 
 		{
@@ -52,8 +71,8 @@ module.exports = function(app, passport) {
 				return displayError(res, "A database error has occured! Please try again later.");
 			} 
 		}
-		res.redirect("/homepageAfterLogin");
 	});
+
     app.get('/homepageBeforeLogin', function(req, res) {
 		res.render('homepageBeforeLogin.ejs'); 
 	});
@@ -93,7 +112,18 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/jobs', checkNotAuthenticated, function(req, res) {
+	app.get('/homepageAfterLogin', function (req, res) {
+		sql.connect(dbconfig.dbConnection()).then(() => {
+			return sql.query("SELECT * FROM JobApplication WHERE Category = " + req.body.category);
+		}).then(result => {
+			res.redirect('/jobs')
+			res.send(result.recordset);
+		}).catch(err => {
+			res.status(500).send("Something Went Wrong !!!");
+		})
+	});
+
+	app.get('/jobs', function(req, res) {
 		res.render('jobs.ejs')
 	});
 
@@ -131,7 +161,7 @@ module.exports = function(app, passport) {
 		res.redirect("/postJob");
 	});
 
-	app.get('/contact', checkNotAuthenticated, function(req, res) {
+	app.get('/contact', function(req, res) {
 		res.render('contact.ejs', { message: req.flash('contactMessage')})
 	});
 
