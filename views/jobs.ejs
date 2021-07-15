@@ -17,6 +17,7 @@
         <img src="img/logo.png" style="float: left; display: block; width: 200px;"> 
         <a href="/homepageBeforeLogin" style="padding-top: 51px;">Home</a>
         <a href="/jobs" style="padding-top: 51px;">Jobs</a>
+        <a href="/candidates" style="padding-top: 51px;">Candidates</a>
         <a href="/contact" style="padding-top: 51px;">Contact</a>
         <a href="/postJob" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >Post a job</a>
         <a href="/profile" style="float: right; padding-top: 51px; color: #4495f1;" >My Profile</a>
@@ -30,8 +31,33 @@
                 <p><%=userList[i].Description%></p>
                 <ul>
                     <li>Salary: <%=userList[i].Salary%></li>
-                    <li><a href="/" class="btn btn-reverse">Apply Now</a></li>
-                    <li><a href="/" class="btn btn-reverse">Remove the job</a></li>
+                    <li><button href="/" class="btn btn-reverse" onclick="document.getElementById('id01').style.display='block'">Apply Now</button></li>
+                    <div id="id01" class="modal">
+  
+                        <form class="modal-content animate" action="/jobs" method="POST">
+                            
+                          <div class="container">
+
+                            <center><h1>Job Application Form</h1></center>
+
+                            <label for="uname"><b>First Name</b></label>
+                            <input type="text" placeholder="Enter first name" name="fname" required>
+
+                            <label for="uname"><b>Last Name</b></label>
+                            <input type="text" placeholder="Enter last name" name="lname" required>
+
+                            <label for="uname"><b>Email</b></label>
+                            <input type="text" placeholder="Enter email" name="email" required>
+
+                            <label for="uname"><b>Details</b></label>
+                            <textarea type="text" placeholder="Write your CV" name="details" cols="130" rows="10" required></textarea>
+                              
+                            <button type="submit" class="btn-apply">Apply for the job</button>
+                          </div>
+                      
+                        </form>
+                    </div>
+                    <li><button href="/" class="btn btn-reverse">Remove the job</button></li>
                     <li></li>
                 </ul>
                 <div class="tech">

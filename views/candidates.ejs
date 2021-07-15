@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="styles/jobs.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="icon" href="img/tabIcon.png">
+  <title>Jobs</title>
+
+</head>
+<body style="background-color: rgb(209, 209, 209);">
+
+    <div id="navbar">
+        <img src="img/logo.png" style="float: left; display: block; width: 200px;"> 
+        <a href="/homepageBeforeLogin" style="padding-top: 51px;">Home</a>
+        <a href="/jobs" style="padding-top: 51px;">Jobs</a>
+        <a href="/contact" style="padding-top: 51px;">Contact</a>
+        <a href="/postJob" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >Post a job</a>
+        <a href="/profile" style="float: right; padding-top: 51px; color: #4495f1;" >My Profile</a>
+      </div>
+
+    <section id="gigs" class="container">
+        <center><h1 style="font-size:40px">Candidates</h1></center>
+        <%for(let i = 0; i < userList.length; i++) { %> 
+            <div class="gig">
+                <h3>First name: <%=userList[i].FirstName%></h3>
+                <h3>Last name: <%=userList[i].LastName%></h3>
+                <h3>Email: <%=userList[i].Email%></h3>
+                <h3>CV: <%=userList[i].Details%></h3>
+                <ul>
+                    <li><b>Applied on:</b> <%=userList[i].AppliedOn%></li>
+                    <li><button href="/" class="btn btn-reverse">Accept the candidate</button></li>
+                    <li></li>
+                </ul>
+            </div>
+        <%}%>
+    </section>
+
+    <button id="btnToScrollTop" onclick="topFunction()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <footer id="footer">
+        <div>
+            <center>
+                <p id="copyright">© 2021 Copyright: Easy Job</p>
+            </center>
+        </div>
+    </footer>
+
+<script src="js/jobs.js"></script>
+</body>
+</html>

@@ -33,3 +33,12 @@ btnToScrollTop.addEventListener("click", function topFunction() {
             behavior: "smooth"
         })
 } )
+
+
+var modal = document.getElementById('id01');
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}

@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [MusalaSoft-Internship]    Script Date: 14.7.2021 г. 21:12:36 ******/
+/****** Object:  Database [MusalaSoft-Internship]    Script Date: 16.7.2021 г. 1:43:50 ******/
 CREATE DATABASE [MusalaSoft-Internship]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -73,7 +73,25 @@ ALTER DATABASE [MusalaSoft-Internship] SET DELAYED_DURABILITY = DISABLED
 GO
 USE [MusalaSoft-Internship]
 GO
-/****** Object:  Table [dbo].[JobApplication]    Script Date: 14.7.2021 г. 21:12:36 ******/
+/****** Object:  Table [dbo].[ApplyJob]    Script Date: 16.7.2021 г. 1:43:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ApplyJob](
+	[JobApplicationsId] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [nvarchar](50) NOT NULL,
+	[LastName] [nvarchar](50) NOT NULL,
+	[Email] [nvarchar](50) NOT NULL,
+	[Details] [nvarchar](250) NOT NULL,
+	[AppliedOn] [date] NULL,
+ CONSTRAINT [PK_ApplyJob] PRIMARY KEY CLUSTERED 
+(
+	[JobApplicationsId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[JobApplication]    Script Date: 16.7.2021 г. 1:43:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +112,7 @@ CREATE TABLE [dbo].[JobApplication](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 14.7.2021 г. 21:12:36 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 16.7.2021 г. 1:43:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -120,7 +138,11 @@ INSERT [dbo].[JobApplication] ([JobId], [JobTitle], [CompanyName], [Category], [
 GO
 INSERT [dbo].[JobApplication] ([JobId], [JobTitle], [CompanyName], [Category], [City], [WorkTime], [Description], [Salary], [PublishedOn]) VALUES (1009, N'Cashier', N'Jumbo', N'SALES & MARKETING', N'Burgas', N'Part Time', N'Secondary education, teamwork skills, previous experience and multiple languages', CAST(1300 AS Decimal(18, 0)), CAST(N'2021-07-14' AS Date))
 GO
-INSERT [dbo].[JobApplication] ([JobId], [JobTitle], [CompanyName], [Category], [City], [WorkTime], [Description], [Salary], [PublishedOn]) VALUES (1010, N'Facilities Construction Project Manager', N'Tesla', N'CONSTRUCTION / FACILITIES', N'Plovdiv', N'Part Time', N'5+ years of experience in a Manufacturing environment, in either a Production, Engineering, or Facil', CAST(5000 AS Decimal(18, 0)), CAST(N'2021-07-14' AS Date))
+INSERT [dbo].[JobApplication] ([JobId], [JobTitle], [CompanyName], [Category], [City], [WorkTime], [Description], [Salary], [PublishedOn]) VALUES (1010, N'Facilities Construction Project Manager', N'Tesla', N'CONSTRUCTION / FACILITIES', N'Plovdiv', N'Part Time', N'5+ years of experience in a Manufacturing environment, in either a Production and Engineering', CAST(5000 AS Decimal(18, 0)), CAST(N'2021-07-14' AS Date))
+GO
+INSERT [dbo].[JobApplication] ([JobId], [JobTitle], [CompanyName], [Category], [City], [WorkTime], [Description], [Salary], [PublishedOn]) VALUES (1011, N'Teacher', N'PGKPI', N'EDUCATION TRAINING', N'Burgas', N'Full Time', N'Teacher for computer sciences and a good knowladge with C++, C# and JavaScript', CAST(2000 AS Decimal(18, 0)), CAST(N'2021-07-14' AS Date))
+GO
+INSERT [dbo].[JobApplication] ([JobId], [JobTitle], [CompanyName], [Category], [City], [WorkTime], [Description], [Salary], [PublishedOn]) VALUES (1012, N'Conductor', N'ConductorBG', N'AUTOMOTIVE JOBS', N'Burgas', N'Part Time', N'Very easy', CAST(1000 AS Decimal(18, 0)), CAST(N'2021-07-16' AS Date))
 GO
 SET IDENTITY_INSERT [dbo].[JobApplication] OFF
 GO
@@ -136,21 +158,54 @@ INSERT [dbo].[Users] ([Id], [Username], [Email], [Password]) VALUES (1061, N'kal
 GO
 INSERT [dbo].[Users] ([Id], [Username], [Email], [Password]) VALUES (1062, N'ivan', N'ITIvanov18@codingburgas.bg', N'$2a$10$r0Mu6iZm4ruJlNvIsjryfeXhWCQHTVSlP3tF5sVzgfWz0d4GJ9sA6')
 GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password]) VALUES (1064, N'ivann', N'ivan@gmail.com', N'$2a$10$BPd1JmBN4PjAsxREh8vAp.md6sV444OaAm.j2YI8h7Y/rDKnCQLo.')
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password]) VALUES (1065, N'kiril', N'kiril@gmail.com', N'$2a$10$oxhbU22ivM1vn08VtPm3Qep9UPzH8IEZSq9IGPEQGQvY71xJiBE6S')
+GO
 SET IDENTITY_INSERT [dbo].[Users] OFF
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UK_Username]    Script Date: 14.7.2021 г. 21:12:37 ******/
+/****** Object:  Index [UK_Username]    Script Date: 16.7.2021 г. 1:43:51 ******/
 ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [UK_Username] UNIQUE NONCLUSTERED 
 (
 	[Username] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+ALTER TABLE [dbo].[ApplyJob] ADD  CONSTRAINT [DF_ApplyJob_AppliedOn]  DEFAULT (getdate()) FOR [AppliedOn]
+GO
 ALTER TABLE [dbo].[JobApplication] ADD  CONSTRAINT [DF_JobApplication_PublishedOn]  DEFAULT (getdate()) FOR [PublishedOn]
+GO
+ALTER TABLE [dbo].[ApplyJob]  WITH CHECK ADD  CONSTRAINT [CK_ApplyEmail] CHECK  (([Email] like '%_@__%.__%'))
+GO
+ALTER TABLE [dbo].[ApplyJob] CHECK CONSTRAINT [CK_ApplyEmail]
 GO
 ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [CK_Email] CHECK  (([Email] like '%_@__%.__%'))
 GO
 ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [CK_Email]
+GO
+/****** Object:  StoredProcedure [dbo].[LoginUser]    Script Date: 16.7.2021 г. 1:43:51 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[LoginUser]
+
+@Username varchar(30),
+@IncommingPassword nvarchar(256),
+@VerifiedId int OUTPUT,
+@UsernameOut varchar(30) OUTPUT,
+@PasswordOut nvarchar(256) OUTPUT
+AS
+
+DECLARE @UserPassword nvarchar(256)
+
+SELECT @UserPassword = [Password], @VerifiedId = Id, @UsernameOut = Username, @PasswordOut = [Password]
+	From Users
+WHERE Username = @Username
+
+IF @IncommingPassword <> @UserPassword 
+	SET @VerifiedId = 0
 GO
 USE [master]
 GO

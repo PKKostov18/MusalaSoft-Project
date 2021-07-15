@@ -14,6 +14,7 @@ var cookieParser  = require('cookie-parser')
 const nodemailer = require('nodemailer')
 let mailer = require('./utils/mailer');
 let job_list_router = require('./utils/job-list');
+let apply_list_router = require('./utils/candidates-list');
 
 require('dotenv').config()
 require('./config/passport-config')(passport)
@@ -43,6 +44,7 @@ app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'))
 app.use('/', mailer);
 app.use('/', job_list_router);
+app.use('/', apply_list_router);
 
 require('./routes/routes.js')(app, passport, nodemailer);
 

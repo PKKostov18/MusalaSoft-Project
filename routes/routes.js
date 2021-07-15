@@ -124,12 +124,37 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/jobs', function(req, res) {
-		res.render('jobs.ejs')
+		res.render('jobs.ejs', { message: req.flash('applyMessage')})
 	});
 
+	app.post('/jobs', async function(req, res, next) {
+		try {
+			const pool = await sql.connect(request);
 	
+			const result = await pool.request()
+			.input('FirstName', sql.NVarChar(50), req.body.fname)
+			.input('LastName', sql.NVarChar(50), req.body.lname)
+			.input('Email', sql.NVarChar(50), req.body.email)
+			.input('Details', sql.NVarChar(250), req.body.details)
+			.query(`
+				INSERT INTO ApplyJob (FirstName, LastName, Email, Details) 
+				VALUES (@FirstName, @LastName, @Email, @Details)
+			`)
+			console.log(result)
+	
+		} catch (err) {
+			console.log(err);
+		}
+		req.flash('applyMessage', 'Successfully applied for the job!')
+		res.redirect("/jobs");
+	});
+
 	app.get('/profile', function(req, res) {
 		res.render('profile.ejs')
+	});
+
+	app.get('/candidates', function(req, res) {
+		res.render('candidates.ejs')
 	});
 
 	app.get('/postJob', function(req, res) {
