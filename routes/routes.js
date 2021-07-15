@@ -28,7 +28,8 @@ module.exports = function(app, passport) {
 	});
 
 	app.post("/login", async function(req, res) {
-		try {
+		try 
+		{
 			let loggedUserInfo = {};
 			console.log(req.body);
 			const pool = await sql.connect(dbconfig);
@@ -42,12 +43,13 @@ module.exports = function(app, passport) {
 			loggedUserInfo.id = result.output.VerifiedId;
 			loggedUserInfo.username = result.output.UsernameOut;
 			console.log(loggedUserInfo);
-		} catch (e) {
+		} 
+		catch(e) 
+		{
 			console.log(e);
-			if (e instanceof sql.RequestError) {
-				return displayError(
-					res, "A database error has occured! Please try again later."
-				);
+			if (e instanceof sql.RequestError) 
+			{
+				return displayError(res, "A database error has occured! Please try again later.");
 			} 
 		}
 		res.redirect("/homepageAfterLogin");
@@ -91,7 +93,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/jobs', function(req, res) {
+	app.get('/jobs', checkNotAuthenticated, function(req, res) {
 		res.render('jobs.ejs')
 	});
 
@@ -129,7 +131,7 @@ module.exports = function(app, passport) {
 		res.redirect("/postJob");
 	});
 
-	app.get('/contact', function(req, res) {
+	app.get('/contact', checkNotAuthenticated, function(req, res) {
 		res.render('contact.ejs', { message: req.flash('contactMessage')})
 	});
 
@@ -149,7 +151,7 @@ function checkAuthenticated(req, res, next) {
 
   function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-      return res.redirect('/')
+      return res.redirect('/login')
     }
     next()
   }
