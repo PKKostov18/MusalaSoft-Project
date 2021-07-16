@@ -1,7 +1,8 @@
 class JobApplication {
-    constructor(JobApplicationsId, FirstName, LastName, Email, Details, AppliedOn)
+    constructor(JobApplicationsId, JobNanme, FirstName, LastName, Email, Details, AppliedOn)
     {
         this.JobApplicationsId = JobApplicationsId;
+        this.JobNanme = JobNanme;
         this.JobTtFirstNameile = FirstName;
         this.LastName = LastName;
         this.Email = Email;

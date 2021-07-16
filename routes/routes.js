@@ -132,13 +132,14 @@ module.exports = function(app, passport) {
 			const pool = await sql.connect(request);
 	
 			const result = await pool.request()
+			.input('JobName', sql.NVarChar(50), req.body.jobname)
 			.input('FirstName', sql.NVarChar(50), req.body.fname)
 			.input('LastName', sql.NVarChar(50), req.body.lname)
 			.input('Email', sql.NVarChar(50), req.body.email)
 			.input('Details', sql.NVarChar(250), req.body.details)
 			.query(`
-				INSERT INTO ApplyJob (FirstName, LastName, Email, Details) 
-				VALUES (@FirstName, @LastName, @Email, @Details)
+				INSERT INTO ApplyJob (JobName, FirstName, LastName, Email, Details) 
+				VALUES (@JobName, @FirstName, @LastName, @Email, @Details)
 			`)
 			console.log(result)
 	

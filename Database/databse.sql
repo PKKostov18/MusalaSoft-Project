@@ -1,12 +1,12 @@
 USE [master]
 GO
-/****** Object:  Database [MusalaSoft-Internship]    Script Date: 16.7.2021 г. 1:43:50 ******/
+/****** Object:  Database [MusalaSoft-Internship]    Script Date: 7/16/2021 10:27:55 AM ******/
 CREATE DATABASE [MusalaSoft-Internship]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'MusalaSoft-Internship', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\MusalaSoft-Internship.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'MusalaSoft-Internship', FILENAME = N'C:\Users\PKKostov18\MusalaSoft-Internship.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'MusalaSoft-Internship_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\MusalaSoft-Internship_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+( NAME = N'MusalaSoft-Internship_log', FILENAME = N'C:\Users\PKKostov18\MusalaSoft-Internship_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
 begin
@@ -73,13 +73,14 @@ ALTER DATABASE [MusalaSoft-Internship] SET DELAYED_DURABILITY = DISABLED
 GO
 USE [MusalaSoft-Internship]
 GO
-/****** Object:  Table [dbo].[ApplyJob]    Script Date: 16.7.2021 г. 1:43:50 ******/
+/****** Object:  Table [dbo].[ApplyJob]    Script Date: 7/16/2021 10:27:55 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ApplyJob](
 	[JobApplicationsId] [int] IDENTITY(1,1) NOT NULL,
+	[JobName] [nvarchar](50) NOT NULL,
 	[FirstName] [nvarchar](50) NOT NULL,
 	[LastName] [nvarchar](50) NOT NULL,
 	[Email] [nvarchar](50) NOT NULL,
@@ -91,7 +92,7 @@ CREATE TABLE [dbo].[ApplyJob](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[JobApplication]    Script Date: 16.7.2021 г. 1:43:50 ******/
+/****** Object:  Table [dbo].[JobApplication]    Script Date: 7/16/2021 10:27:55 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -112,7 +113,7 @@ CREATE TABLE [dbo].[JobApplication](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 16.7.2021 г. 1:43:50 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 7/16/2021 10:27:55 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -127,6 +128,12 @@ CREATE TABLE [dbo].[Users](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[ApplyJob] ON 
+GO
+INSERT [dbo].[ApplyJob] ([JobApplicationsId], [JobName], [FirstName], [LastName], [Email], [Details], [AppliedOn]) VALUES (1, N'Nurse', N'Plamen', N'Kostov', N'PKKostov18@codingburgs.bg', N'TEST', NULL)
+GO
+SET IDENTITY_INSERT [dbo].[ApplyJob] OFF
 GO
 SET IDENTITY_INSERT [dbo].[JobApplication] ON 
 GO
@@ -166,7 +173,7 @@ SET IDENTITY_INSERT [dbo].[Users] OFF
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UK_Username]    Script Date: 16.7.2021 г. 1:43:51 ******/
+/****** Object:  Index [UK_Username]    Script Date: 7/16/2021 10:27:55 AM ******/
 ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [UK_Username] UNIQUE NONCLUSTERED 
 (
 	[Username] ASC
@@ -184,7 +191,28 @@ ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [CK_Email] CHECK  (([Email
 GO
 ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [CK_Email]
 GO
-/****** Object:  StoredProcedure [dbo].[LoginUser]    Script Date: 16.7.2021 г. 1:43:51 ******/
+/****** Object:  StoredProcedure [dbo].[ApplyCheck]    Script Date: 7/16/2021 10:27:55 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[ApplyCheck]
+
+@JobName varchar(30),
+@VerifiedId int OUTPUT,
+@JobNameOut varchar(30) OUTPUT
+AS
+
+DECLARE @JobNameInDatabase nvarchar(30)
+
+SELECT @JobNameInDatabase = JobName, @VerifiedId = JobApplicationsId, @JobNameOut = JobName
+    From ApplyJob
+WHERE JobName = @JobName
+
+IF @JobNameInDatabase <> @JobName 
+    SET @VerifiedId = 0
+GO
+/****** Object:  StoredProcedure [dbo].[LoginUser]    Script Date: 7/16/2021 10:27:55 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
