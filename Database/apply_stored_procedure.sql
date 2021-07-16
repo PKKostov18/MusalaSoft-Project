@@ -1,16 +1,16 @@
 CREATE OR ALTER PROCEDURE ApplyCheck
 
 @JobName varchar(30),
-@JobApplicationTitle varchar(30),
 @VerifiedId int OUTPUT,
-@JobNameOut varchar(30) OUTPUT
+@JobNameOut varchar(30) OUTPUT,
+@JobApplicationTitleOut varchar(30) OUTPUT
 AS
 
-DECLARE @JobNameInDatabase nvarchar(30)
+DECLARE @JobApplicationTitle nvarchar(30)
 
-SELECT @JobNameInDatabase = JobTitle, @VerifiedId = JobApplicationsId, @JobNameOut = JobTitle
-    From JobApplication
-WHERE JobName = @JobName
+SELECT @VerifiedId = JobApplicationsId, @JobNameOut = JobName, @JobApplicationTitle = JobApplication.Columns.JobTitle
+    From ApplyJob
+WHERE JobName = @JobName 
 
-IF @JobNameInDatabase <> @JobName 
+IF @JobName <> @JobApplicationTitle
     SET @VerifiedId = 0
