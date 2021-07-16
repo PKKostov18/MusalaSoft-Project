@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="styles/jobs.css">
+  <link rel="stylesheet" type="text/css" href="styles/candidates.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
@@ -15,17 +15,20 @@
 
     <div id="navbar">
         <img src="img/logo.png" style="float: left; display: block; width: 200px;"> 
-        <a href="/homepageBeforeLogin" style="padding-top: 51px;">Home</a>
+        <a href="/homepageAfterLogin" style="padding-top: 51px;">Home</a>
         <a href="/jobs" style="padding-top: 51px;">Jobs</a>
+        <a href="/candidates" style="padding-top: 51px;">Candidates</a>
         <a href="/contact" style="padding-top: 51px;">Contact</a>
-        <a href="/postJob" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >Post a job</a>
+        <a href="/homepageBeforeLogin" style="float: right; padding-top: 51px; padding-right: 120px; color: #4495f1;" >Log out</a>
+        <a href="/postJob" style="float: right; padding-top: 51px; color: #4495f1;" >Post a job</a>
         <a href="/profile" style="float: right; padding-top: 51px; color: #4495f1;" >My Profile</a>
-      </div>
+    </div>
 
     <section id="gigs" class="container">
         <center><h1 style="font-size:40px">Candidates</h1></center>
         <%for(let i = 0; i < userList.length; i++) { %> 
             <div class="gig">
+                <h3>Job you want: <%=userList[i].JobName%></h3>
                 <h3>First name: <%=userList[i].FirstName%></h3>
                 <h3>Last name: <%=userList[i].LastName%></h3>
                 <h3>Email: <%=userList[i].Email%></h3>
@@ -51,6 +54,6 @@
         </div>
     </footer>
 
-<script src="js/jobs.js"></script>
+<script src="js/candidates.js"></script>
 </body>
 </html>

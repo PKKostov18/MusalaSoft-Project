@@ -125,7 +125,7 @@ iframe {
   align-items: center;
   padding: 15px;
   position: relative;
-  background-color: #f2f2f2;
+  background-color: #cecece;
 }
 
 .wrap-contact100 {
@@ -139,7 +139,7 @@ iframe {
 
 img
 {
-  margin-left:40px;
+  margin-left:-70px;
   margin-top:-100px;
 }
 

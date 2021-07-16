@@ -52,7 +52,7 @@ module.exports = function(app, passport) {
 
 			if(loggedUserInfo.username == null || !bcrypt.compareSync(req.body.password, loggedUserInfo.password))
 			{
-				req.flash('loginMessage', 'Invalid username!')
+				req.flash('loginMessage', 'Invalid username or password!')
 				console.log(loggedUserInfo);
 				res.redirect("/login")
 			}
@@ -142,6 +142,35 @@ module.exports = function(app, passport) {
 				VALUES (@JobName, @FirstName, @LastName, @Email, @Details)
 			`)
 			console.log(result)
+
+			/*
+			let loggedUserInfo = {};
+			console.log(req.body);
+			const pool = await sql.connect(dbconfig);
+			const result = await pool
+				.request()
+				.input("JobName", sql.VarChar, req.body.jobname)
+				.output("VerifiedId", sql.Int)
+				.output("JobNameOut", sql.VarChar)
+				.execute("ApplyCheck");
+			loggedUserInfo.id = result.output.VerifiedId;
+			loggedUserInfo.jobtitle = result.output.JobNameOut;
+
+			console.log(loggedUserInfo.jobtitle);
+			console.log(req.body.jobname);
+
+			if(loggedUserInfo.jobtitle == null || req.body.jobname != loggedUserInfo.jobtitle)
+			{
+				req.flash('applyMessage', 'Invalid job title!')
+				console.log(loggedUserInfo);
+				res.redirect("/jobs")
+			}
+			else
+			{
+				console.log(loggedUserInfo);
+				
+			}
+			*/
 	
 		} catch (err) {
 			console.log(err);
