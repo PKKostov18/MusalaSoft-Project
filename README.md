@@ -49,7 +49,7 @@ Back-end  | Documentary
 ## Documentation and Presentation
 
 - [Documentation](https://codingburgas-my.sharepoint.com/:w:/g/personal/pkkostov18_codingburgas_bg/EcPByMuGL2FAuwLjmmpbwxMBJcPx_bi1SSLA5j-5XgzLxg?e=GUKY6y)
-- [Presentation](https://codingburgas-my.sharepoint.com/:p:/g/personal/pkkostov18_codingburgas_bg/EQLJpXWAEIZNnNh36k0JQ8wBlUSutooJoJ3G5i_WgWYmOA?e=25sWRg)
+- [Presentation](https://codingburgas-my.sharepoint.com/:p:/g/personal/pkkostov18_codingburgas_bg/EZYs58lcxJdEreahohUcmCsBXcx3GFuWDr0J8O2-Q2E2vQ?e=mErXoq)
 
 ***
 
