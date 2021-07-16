@@ -13,6 +13,11 @@ let router = express.Router();
         {
             res.render('jobs', {userList: users_result.recordset});
         });
+
+        router.get('/homepageBeforeLogin', function (req, res)
+        {
+            res.render('homepageBeforeLogin', {userList: users_result.recordset});
+        });
     }
     catch(err)
     {

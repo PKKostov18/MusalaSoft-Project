@@ -5,6 +5,13 @@
         background-color: white;
     }
 
+    :root {
+        --primary-color: #568c9b;
+        --primary-hover-color: #64a5b7;
+        --bg-color: rgb(228, 228, 228);
+        --box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.7);
+    }
+
     .title {
         font-size: 60px;
         text-shadow: 1px 2px 3px #999;
@@ -136,7 +143,7 @@
     }
 
     .container {
-        background-color: #f5f5f5;
+        background-color: #e4e4e4;
         margin: 150 auto;
         width: 100%;
         height: 400px;
@@ -180,5 +187,3 @@
             padding: 50px 80px 0 0;
         }
     }
-    
-    
